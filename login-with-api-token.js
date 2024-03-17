@@ -1,8 +1,6 @@
 import inquirer from "inquirer";
 import fs from "fs";
-import { execSync } from "node:child_process";
-// note to self: execa library
-
+import { execaCommandSync } from "execa";
 
 const loginWithApiToken = async () => {
   const cloudFlareCredentials = await inquirer.prompt([
@@ -20,14 +18,11 @@ const loginWithApiToken = async () => {
   writeStream.write(`CLOUDFLARE_ACCOUNT_ID=${cloudFlareCredentials.CLOUDFLARE_ACCOUNT_ID}\n`);
   writeStream.write(`CLOUDFLARE_API_TOKEN=${cloudFlareCredentials.CLOUDFLARE_API_TOKEN}`);
 
-  // may need puppeteer here to check for permissions page and click 'agree' if so
-  // execSync(`npx wrangler login`);
-
   // 'whoami' command to check for valid cloudflare login
-  execSync('npx wrangler whoami', { stdio: 'inherit' }, (err, output) => {
+  execaCommandSync('npm run whoami', { stdio: 'inherit' }, (err, output) => {
     if (err) {
-      console.error("could not execute command: ", err)
-      return
+      console.error("could not execute command: ", err);
+      return;
     }
 
     // console.log("Output: \n", output)
