@@ -1,40 +1,47 @@
-import inquirer from "inquirer";
 import { select } from "@inquirer/prompts";
 import loginWithApiToken from "./login-with-api-token.js";
 import loginWithOauth from "./login-with-oauth.js";
-import deployCounterDemoApp from "./deploy-counter-demo.js";
+import checkLogin from "./login_check.js";
 
-// login in choice => confirm login => (prompt for destination) => deploy => return URL
+const loginUser = async () => {
+  let loginResult = await checkLogin();
+  let loginStatus = loginResult.loginStatus;
+  const initialSuccessAddendum = loginStatus ? 'are already' : '';
 
-const loginChoice = await select({
-  message: "Select a method to login to Cloudflare Workers: ",
-  choices: [
-    {
-      name: "OAuth",
-      value: 1,
-      description: "Login via Oauth. You will be logging in through your browser.",
-    },
-    {
-      name: "Account ID and API Token",
-      value: 2,
-      description: "Login via account ID and API token. You will need to provide your Account ID and API token.",
-    },
-  ],
-});
+  while (!loginStatus) {
+    const loginChoice = await select({
+      message: "\nSelect a method to log in to Cloudflare Workers: ",
+      choices: [
+        {
+          name: "OAuth",
+          value: 1,
+          description: "Log in via Oauth. You will be logging in through your browser.",
+        },
+        {
+          name: "Account ID and API Token",
+          value: 2,
+          description: "Log in via account ID and API token. You will need to provide your Account ID and API token.",
+        },
+      ],
+    });
 
-switch (loginChoice) {
-  case 1:
-    console.log("Logging in via OAuth");
-    await loginWithOauth();
-    await deployCounterDemoApp();
-    break;
-  case 2:
-    console.log("Logging in via Account ID and API token");
-    await loginWithApiToken();
-    await deployCounterDemoApp();
-    break;
-  default:
-    break;
+    if (loginChoice === 1) {
+      console.log("Logging in via OAuth\n");
+      await loginWithOauth();
+    } else {
+      console.log("Logging in via Account ID and API token");
+      await loginWithApiToken();
+    }
+
+    loginResult = await checkLogin();
+    loginStatus = loginResult.loginStatus;
+
+    if (!loginStatus) {
+      console.log('You did not successfully log in. Please try again.\n');
+    }
+  }
+
+  console.log(`\nYou ${initialSuccessAddendum} successfully logged in with the email ${loginResult.email}!`);
 }
 
-// TODO: Need a way to confirm valid login - wrap npx wrangler whoami pipe => on_message event handler promise
+loginUser();

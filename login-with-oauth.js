@@ -1,7 +1,7 @@
 import { execaCommandSync } from "execa";
 
 const loginWithOauth = async () => {
-  execaCommandSync(`npx wrangler login`);
+  execaCommandSync(`npm run login`);
 };
 
 export default loginWithOauth;

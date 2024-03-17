@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "whoami": "wrangler whoami"
+    "whoami": "wrangler whoami",
+    "login": "wranger login",
+    "logout": "wrangler logout"
   },
   "keywords": [],
   "author": "",
