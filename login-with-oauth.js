@@ -1,7 +1,7 @@
-import { execSync } from "node:child_process";
+import { execaSync } from "execa";
 
 const loginWithOauth = async () => {
-  execSync(`npx wrangler login`);
+  execaSync(`npx wrangler login`);
 };
 
 export default loginWithOauth;

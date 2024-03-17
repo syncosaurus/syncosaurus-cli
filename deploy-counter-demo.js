@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import fs from "fs";
-import { execSync } from "node:child_process";
+import { execaSync } from "execa";
 import { humanId } from "human-id";
 import { parse, stringify } from "smol-toml";
 
@@ -13,7 +13,7 @@ const deployCounterDemoApp = async () => {
   ]);
 
   // this is a placeholder for backend deployment
-  execSync(
+  execaSync(
     `git clone https://github.com/cloudflare/durable-objects-template.git ${projectName.HELLO_WORLD_DIR_NAME} `,
     { stdio: "inherit" },
     (err) => {
@@ -26,7 +26,7 @@ const deployCounterDemoApp = async () => {
 
   // Need to ensure that the name of the worker has to be unique on your account
   // The name of the worker is located in the `wrangler.toml` file, after `name=`
-  execSync(
+  execaSync(
     `cd ${projectName.HELLO_WORLD_DIR_NAME} && npm install`,
     { stdio: "inherit" },
     (err, output) => {
@@ -63,7 +63,7 @@ const deployCounterDemoApp = async () => {
     newToml
   );
 
-  execSync(
+  execaSync(
     `cd ${projectName.HELLO_WORLD_DIR_NAME} && npx wrangler deploy`,
     { stdio: "inherit" },
     (err, output) => {
