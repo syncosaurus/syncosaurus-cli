@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import fs from "fs";
 import { execSync } from "node:child_process";
 import { humanId } from "human-id";
-import toml from "@iarna/toml";
+import { parse, stringify } from "smol-toml";
 
 const deployCounterDemoApp = async () => {
   const projectName = await inquirer.prompt([
@@ -50,21 +50,21 @@ const deployCounterDemoApp = async () => {
   // console.log(workersList);
 
   //Code to overwrite first line of toml file so we can uniquely name the file
-  let workerId = humanId();
+  let workerId = humanId('-');
   const wranglerTomlContents = fs.readFileSync(
     `./${projectName.HELLO_WORLD_DIR_NAME}/wrangler.toml`,
     "utf8"
   );
-  const parsedToml = toml.parse(wranglerTomlContents);
-  parsedToml.name = `appname-${workerId}`.toLowerCase(); //replace appname with our app name whenever we get there
-  const newToml = toml.stringify(parsedToml);
+  const configObj = parse(wranglerTomlContents);
+  configObj.name = `appname-${workerId}`.toLowerCase(); //replace appname with our app name whenever we get there
+  const newToml = stringify(configObj);
   fs.writeFileSync(
     `./${projectName.HELLO_WORLD_DIR_NAME}/wrangler.toml`,
     newToml
   );
 
   execSync(
-    `cd ${projectName.HELLO_WORLD_DIR_NAME} && npx wrangler deploy && killall node`,
+    `cd ${projectName.HELLO_WORLD_DIR_NAME} && npx wrangler deploy`,
     { stdio: "inherit" },
     (err, output) => {
       if (err) {
