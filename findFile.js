@@ -1,8 +1,6 @@
 import { readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
-const rootPath = './';
-
 const listFiles = (dir, fileList = []) => {
   const files = readdirSync(dir);
 
@@ -17,16 +15,16 @@ const listFiles = (dir, fileList = []) => {
   return fileList;
 };
 
-const findFile = (fileName) => {
-  const allFiles = listFiles(rootPath);
+export const findFile = (clientPath, fileName) => {
+  const allFiles = listFiles(clientPath);
 
   const searchResult = allFiles.find(file => file.endsWith(fileName));
 
   if (searchResult) {
-    return `${rootPath}${searchResult}`;
+    return `./${searchResult}`;
   } else {
     return null;
   }
 };
 
-console.log(findFile('mutators.js'));
+
