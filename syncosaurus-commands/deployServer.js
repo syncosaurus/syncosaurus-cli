@@ -1,22 +1,21 @@
 import { $, execaCommandSync } from "execa";
 import { cwd, chdir } from "node:process";
 import fs from "node:fs";
-import { findFile } from "../findFile.js";
+import { findFile } from "../utils/findFile.js";
 import { humanId } from "human-id";
 import { parse, stringify } from "smol-toml";
+import ora from "ora";
 import config from "../syncosaurus.config.js";
 
 const { client, server } = config;
 const cmdOutput = [];
-console.log(client, server);
 
 const mutatorClientPath = findFile(client, "mutators.js");
-console.log(mutatorClientPath);
 
 execaCommandSync(`cp ${mutatorClientPath} ${server}/mutators.js`);
 
 chdir(server);
-console.log('Installing dependencies...\n');
+const deploymentSpinner = ora("Deploying...").start();
 
 execaCommandSync(`npm install`, (err, output) => {
   if (err) {
@@ -49,7 +48,6 @@ child.stdout.on("data", (data) => {
 
 const result = await new Promise((resolve, reject) => {
   child.on("close", (_code) => {
-    console.log('Deploying...');
     const deployedSnippet = "https://";
     const result = cmdOutput.find((line) => line.includes(deployedSnippet));
 
@@ -65,4 +63,7 @@ const result = await new Promise((resolve, reject) => {
   });
 });
 
-console.log(`\nDeployed! Running at ${result.url}!`);
+deploymentSpinner.stopAndPersist({
+  symbol: "✅",
+  text: `Deployed! \nRunning at ${result.url}!`,
+});
