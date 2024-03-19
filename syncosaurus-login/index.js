@@ -1,12 +1,12 @@
 import { select } from "@inquirer/prompts";
-import loginWithApiToken from "./login-with-api-token.js";
-import loginWithOauth from "./login-with-oauth.js";
-import checkLogin from "./login_check.js";
+import loginWithApiToken from "./src/login-with-api-token.js";
+import loginWithOauth from "./src/login-with-oauth.js";
+import checkLogin from "./src/login-check.js";
 
 const loginUser = async () => {
   let loginResult = await checkLogin();
   let loginStatus = loginResult.loginStatus;
-  const initialSuccessAddendum = loginStatus ? 'are already' : '';
+  const initialSuccessAddendum = loginStatus ? ' are already ' : ' ';
 
   while (!loginStatus) {
     const loginChoice = await select({
@@ -41,7 +41,7 @@ const loginUser = async () => {
     }
   }
 
-  console.log(`\nYou ${initialSuccessAddendum} successfully logged in with the email ${loginResult.email}!`);
+  console.log(`\nYou${initialSuccessAddendum}successfully logged in with the email ${loginResult.email}!`);
 }
 
 loginUser();

@@ -1,6 +1,6 @@
 import { execaCommandSync } from "execa";
 import { cwd, chdir } from "node:process";
-import config from "./syncosaurus.config.js";
+import config from "../syncosaurus.config.js";
 
 const { server } = config;
 chdir(server);

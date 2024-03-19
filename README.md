@@ -1,6 +1,6 @@
 # Syncosaurus CLI tools
 
-## CLI login
+## CLI commands
 
 - `node main.js` as current login CLI command
   -   Login via OAuth or login via API token and Account ID
@@ -14,3 +14,7 @@
 - `wrangler init`
 - `wrangler rollback`
 - `wrangler deployments`
+
+## Future README.md instructions
+
+- Specify shape and requirements for a syncosaurus application

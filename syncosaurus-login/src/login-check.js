@@ -18,7 +18,7 @@ const checkLogin = async () => {
 
   return await new Promise((resolve, reject) => {
     child.on("close", (_code) => {
-      const loginSnippet = "You are logged in with an API Token";
+      const loginSnippet = "You are logged in";
       let result = cmdOutput.find((line) => line.includes(loginSnippet));
 
       if (result) {
