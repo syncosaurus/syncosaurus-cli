@@ -2,10 +2,13 @@ import { select } from "@inquirer/prompts";
 import loginWithApiToken from "./src/login-with-api-token.js";
 import loginWithOauth from "./src/login-with-oauth.js";
 import checkLogin from "./src/login-check.js";
+import ora from "ora";
 
 const loginUser = async () => {
   let loginResult = await checkLogin();
   let loginStatus = loginResult.loginStatus;
+  let loginSpinner;
+
   const initialSuccessAddendum = loginStatus ? ' are already ' : ' ';
 
   while (!loginStatus) {
@@ -26,10 +29,10 @@ const loginUser = async () => {
     });
 
     if (loginChoice === 1) {
-      console.log("Logging in via OAuth\n");
+      loginSpinner = ora("Logging in via OAuth\n").start();
       await loginWithOauth();
     } else {
-      console.log("Logging in via Account ID and API token");
+      loginSpinner = ora("Logging in via Account ID and API token").start();
       await loginWithApiToken();
     }
 
@@ -37,11 +40,16 @@ const loginUser = async () => {
     loginStatus = loginResult.loginStatus;
 
     if (!loginStatus) {
-      console.log('You did not successfully log in. Please try again.\n');
+      loginSpinner.fail('You did not successfully log in. Please try again.\n');
+    } else {
+      loginSpinner.stopAndPersist({
+        symbol: "✅",
+        text: `\nYou successfully logged in with the email ${loginResult.email}!`,
+      });
     }
   }
 
-  console.log(`\nYou${initialSuccessAddendum}successfully logged in with the email ${loginResult.email}!`);
+  console.log(`You are already logged in with the email ${loginResult.email}!`);
 }
 
 loginUser();
