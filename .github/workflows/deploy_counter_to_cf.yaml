@@ -2,10 +2,11 @@ name: Deploy Counter App Demo to Cloudflare Workers
 
 on:
   push:
-    branches: [github_actions_testing]
+    branches:
+      - github_actions_testing
 
 jobs:
-  deploy-counter-demo:
+  deploy:
     runs-on: ubuntu-latest
     name: Deploys counter demo DO worker code located at ./deployment_test/do-server
 
