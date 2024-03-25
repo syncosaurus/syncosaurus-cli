@@ -1,0 +1,20 @@
+name: Deploy Counter App Demo to Cloudflare Workers
+
+on:
+  push:
+    branches: [github_actions_testing]
+
+jobs:
+  deploy-counter-demo:
+    runs-on: ubuntu-latest
+    name: Deploys counter demo DO worker code located at ./deployment_test/do-server
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: cloudflare@rangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: "deployment_test/do-server"
+
