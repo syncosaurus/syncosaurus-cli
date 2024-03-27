@@ -13,7 +13,6 @@ export default class Init extends Command {
     const viteOutput = await this.createViteProject(projectName)
     await this.integrateSyncosaurus(projectName)
 
-    // this.log(viteOutput.replace('.', '!'))
     this.log(`
     Done! Now run:
     
