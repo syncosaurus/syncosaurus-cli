@@ -11,7 +11,6 @@ export class MyCommand extends Command {
       const viteProcess = execa('vite', {stdio: 'inherit'})
       const wranglerProcess = execa('wrangler', ['dev'], {stdio: 'inherit'})
       Promise.all([viteProcess, wranglerProcess])
-      this.log('🦖 Dev servers shutting down!')
     } else {
       this.log("🦖 Error! It looks like you aren't in a Syncosaurus project.")
     }
