@@ -1,6 +1,7 @@
 import {Command, ux} from '@oclif/core'
 import {execa} from 'execa'
 import {input} from '@inquirer/prompts'
+import path from 'path'
 import {generateSyncoJson, generateWranglerToml} from '../utils/configs.js'
 
 export default class Init extends Command {
@@ -12,6 +13,7 @@ export default class Init extends Command {
 
     const viteOutput = await this.createViteProject(projectName)
     await this.integrateSyncosaurus(projectName)
+    await this.copyTemplate()
 
     // TODO add in template react app, copy from node_module into main app
     this.log(`
@@ -69,5 +71,11 @@ export default class Init extends Command {
     })
 
     ux.action.stop("everybody's talking now!")
+  }
+
+  private async copyTemplate() {
+    const dirName = path.dirname(new URL(import.meta.url).pathname)
+    const templateDir = path.join(dirName, '../templates')
+    this.log(templateDir)
   }
 }
