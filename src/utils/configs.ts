@@ -1,15 +1,15 @@
 export const generateWranglerToml = (projectName: string) => {
   return `name = "${projectName}"
-  main = "./index.mjs"
-  compatibility_date = "2024-03-27"
-  
-  [[durable_objects.bindings]]
-  name = "WEBSOCKET_SERVER"
-  class_name = "WebSocketServer"
-  
-  [[migrations]]
-  tag = "v1"
-  new_classes = ["WebSocketServer"]`
+main = "./index.mjs"
+compatibility_date = "2024-03-27"
+
+[[durable_objects.bindings]]
+name = "WEBSOCKET_SERVER"
+class_name = "WebSocketServer"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["WebSocketServer"]`
 }
 
 export const generateSyncoJson = (projectName: string) => {

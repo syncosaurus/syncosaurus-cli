@@ -1,7 +1,7 @@
 import {Command, ux} from '@oclif/core'
 import {execa} from 'execa'
 import {input} from '@inquirer/prompts'
-import {generateSyncoJson} from '../utils/configs.js'
+import {generateSyncoJson, generateWranglerToml} from '../utils/configs.js'
 
 export default class Init extends Command {
   static description = 'Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.'
@@ -13,11 +13,11 @@ export default class Init extends Command {
     const viteOutput = await this.createViteProject(projectName)
     await this.integrateSyncosaurus(projectName)
 
+    // TODO add in template react app, copy from node_module into main app
     this.log(`
     Done! Now run:
     
       cd ${projectName}
-      npm install
       syncosaurus dev\n\n`)
   }
 
@@ -57,8 +57,13 @@ export default class Init extends Command {
     })
 
     // Create the syncosaurus config file
-    await execa(`echo '${generateSyncoJson(projectName)}' > 'syncosaurus.json'`, [], {
+    await execa(`echo '${generateSyncoJson(projectName)}' > 'syncosaurus.json'`, {
       cwd: projectDir,
+      shell: true,
+      stdio: 'inherit',
+    })
+    await execa(`echo '${generateWranglerToml(projectName)}' > 'wrangler.toml'`, {
+      cwd: projectDir + '/node_modules/syncosaurus/do',
       shell: true,
       stdio: 'inherit',
     })
