@@ -17,7 +17,7 @@ $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
 running command...
 $ syncosaurus (--version)
-syncosaurus-cli/0.4.25 darwin-arm64 node-v21.1.0
+syncosaurus-cli/0.0.0 darwin-arm64 node-v21.1.0
 $ syncosaurus --help [COMMAND]
 USAGE
   $ syncosaurus COMMAND
@@ -26,9 +26,13 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`syncosaurus dev`](#syncosaurus-dev)
 * [`syncosaurus hello PERSON`](#syncosaurus-hello-person)
 * [`syncosaurus hello world`](#syncosaurus-hello-world)
 * [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
+* [`syncosaurus init [FILE]`](#syncosaurus-init-file)
+* [`syncosaurus login`](#syncosaurus-login)
+* [`syncosaurus logout`](#syncosaurus-logout)
 * [`syncosaurus plugins`](#syncosaurus-plugins)
 * [`syncosaurus plugins:install PLUGIN...`](#syncosaurus-pluginsinstall-plugin)
 * [`syncosaurus plugins:inspect PLUGIN...`](#syncosaurus-pluginsinspect-plugin)
@@ -39,6 +43,21 @@ USAGE
 * [`syncosaurus plugins:uninstall PLUGIN...`](#syncosaurus-pluginsuninstall-plugin-1)
 * [`syncosaurus plugins:uninstall PLUGIN...`](#syncosaurus-pluginsuninstall-plugin-2)
 * [`syncosaurus plugins update`](#syncosaurus-plugins-update)
+* [`syncosaurus whoami`](#syncosaurus-whoami)
+
+## `syncosaurus dev`
+
+Start oncurrent Vite and Wrangler dev servers
+
+```
+USAGE
+  $ syncosaurus dev
+
+DESCRIPTION
+  Start oncurrent Vite and Wrangler dev servers
+```
+
+_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/dev.ts)_
 
 ## `syncosaurus hello PERSON`
 
@@ -62,7 +81,7 @@ EXAMPLES
   hello friend from oclif! (./src/commands/hello/index.ts)
 ```
 
-_See code: [src/commands/hello/index.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.4.25/src/commands/hello/index.ts)_
+_See code: [src/commands/hello/index.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/hello/index.ts)_
 
 ## `syncosaurus hello world`
 
@@ -80,7 +99,7 @@ EXAMPLES
   hello world! (./src/commands/hello/world.ts)
 ```
 
-_See code: [src/commands/hello/world.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.4.25/src/commands/hello/world.ts)_
+_See code: [src/commands/hello/world.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/hello/world.ts)_
 
 ## `syncosaurus help [COMMAND]`
 
@@ -100,7 +119,59 @@ DESCRIPTION
   Display help for syncosaurus.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.18/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.20/src/commands/help.ts)_
+
+## `syncosaurus init [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ syncosaurus init [FILE] [-f] [-n <value>]
+
+ARGUMENTS
+  FILE  file to read
+
+FLAGS
+  -f, --force
+  -n, --name=<value>  name to print
+
+DESCRIPTION
+  describe the command here
+
+EXAMPLES
+  $ syncosaurus init
+```
+
+_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/init.ts)_
+
+## `syncosaurus login`
+
+Login Synocosaurus through Oauth or API token
+
+```
+USAGE
+  $ syncosaurus login
+
+DESCRIPTION
+  Login Synocosaurus through Oauth or API token
+```
+
+_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/login.ts)_
+
+## `syncosaurus logout`
+
+Login Synocosaurus through Oauth or API token
+
+```
+USAGE
+  $ syncosaurus logout
+
+DESCRIPTION
+  Login Synocosaurus through Oauth or API token
+```
+
+_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/logout.ts)_
 
 ## `syncosaurus plugins`
 
@@ -123,7 +194,7 @@ EXAMPLES
   $ syncosaurus plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/index.ts)_
 
 ## `syncosaurus plugins:install PLUGIN...`
 
@@ -192,7 +263,7 @@ EXAMPLES
   $ syncosaurus plugins inspect myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/inspect.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/inspect.ts)_
 
 ## `syncosaurus plugins:install PLUGIN...`
 
@@ -236,7 +307,7 @@ EXAMPLES
   $ syncosaurus plugins install someuser/someplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/install.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/install.ts)_
 
 ## `syncosaurus plugins:link PLUGIN`
 
@@ -266,7 +337,7 @@ EXAMPLES
   $ syncosaurus plugins link myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/link.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/link.ts)_
 
 ## `syncosaurus plugins:uninstall PLUGIN...`
 
@@ -307,7 +378,7 @@ FLAGS
   --reinstall  Reinstall all plugins after uninstalling.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/reset.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/reset.ts)_
 
 ## `syncosaurus plugins:uninstall PLUGIN...`
 
@@ -335,7 +406,7 @@ EXAMPLES
   $ syncosaurus plugins uninstall myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/uninstall.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/uninstall.ts)_
 
 ## `syncosaurus plugins:uninstall PLUGIN...`
 
@@ -379,5 +450,19 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.8/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.3.10/src/commands/plugins/update.ts)_
+
+## `syncosaurus whoami`
+
+Check your current login status
+
+```
+USAGE
+  $ syncosaurus whoami
+
+DESCRIPTION
+  Check your current login status
+```
+
+_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.0/src/commands/whoami.ts)_
 <!-- commandsstop -->
