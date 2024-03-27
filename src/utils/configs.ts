@@ -4,7 +4,7 @@ main = "./index.mjs"
 compatibility_date = "2024-03-27"
 
 [[durable_objects.bindings]]
-name = "WEBSOCKET_SERVER"
+name = "SYNCOSAURUS_WEBSOCKET_SERVER"
 class_name = "WebSocketServer"
 
 [[migrations]]
@@ -18,7 +18,8 @@ export const generateSyncoJson = (projectName: string) => {
     "projectName": "${projectName}",
     "compatibilityDate": "${new Date().toISOString().slice(0, 10)}",
     "encryption": false,
-    "authentication": false
+    "authentication": false,
+    "serverMsgFrequency": 16
   }
   `
 }
