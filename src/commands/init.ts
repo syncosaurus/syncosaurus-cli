@@ -1,20 +1,22 @@
 import {Command, ux} from '@oclif/core'
 import {execa} from 'execa'
 import {input} from '@inquirer/prompts'
-import {generateWranglerToml, generateSyncoJson} from '../utils/configs.js'
+import {generateSyncoJson} from '../utils/configs.js'
 
 export default class Init extends Command {
   static description = 'Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.'
 
   public async run(): Promise<void> {
-    const cwd = process.cwd()
-
-    // Query for project name
     this.log('🦖 Creating a new Syncosaurus backed React app!')
     const projectName = await input({message: 'What is the name of your project?'})
-    const projectDir = process.cwd() + '/' + projectName
 
-    // Create the vite project
+    const viteOutput = await this.createViteProject(projectName)
+    await this.integrateSyncosaurus(projectName)
+
+    this.log(viteOutput.replace('.', '!'))
+  }
+
+  private async createViteProject(projectName: string) {
     ux.action.start('🧙 Engaging dino wizardry to scaffold your project')
     let viteCompleted = false
     let finalOutput = ''
@@ -35,11 +37,16 @@ export default class Init extends Command {
         finalOutput += str
       }
     })
+
     await createVite
     ux.action.stop('Finished!')
+    return finalOutput
+  }
 
-    // Install syncosaurus as a dependency
-    ux.action.start('🦖 Integrating Syncosaurus')
+  private async integrateSyncosaurus(projectName: string) {
+    const projectDir = process.cwd() + '/' + projectName
+
+    ux.action.start('🦖↔️🦖 Setting up inter-syncosaurus communication channels')
     await execa('npm', ['install', 'syncosaurus'], {
       cwd: projectDir,
     })
@@ -51,18 +58,6 @@ export default class Init extends Command {
       stdio: 'inherit',
     })
 
-    // Log the final output from running Vite
-    ux.action.stop('Finished!\n')
-    this.log(finalOutput.slice(6))
+    ux.action.stop("Everybody's talking now!")
   }
 }
-
-/*
-  Steps to do:
-
-  scaffold a vite project DONE
-  add syncosaurus as a dependency in the projects package.json DONE
-  Create a syncosaurus.json file
-  Create a wrangler.toml
-
-*/
