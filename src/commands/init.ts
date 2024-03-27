@@ -13,7 +13,13 @@ export default class Init extends Command {
     const viteOutput = await this.createViteProject(projectName)
     await this.integrateSyncosaurus(projectName)
 
-    this.log(viteOutput.replace('.', '!'))
+    // this.log(viteOutput.replace('.', '!'))
+    this.log(`
+    Done! Now run:
+    
+      cd ${projectName}
+      npm install
+      syncosaurus dev\n\n`)
   }
 
   private async createViteProject(projectName: string) {
@@ -26,7 +32,7 @@ export default class Init extends Command {
     createVite.stdout?.on('data', async (data) => {
       const str = data.toString()
       if (str.includes('is not empty.')) {
-        this.error('❌ It looks like that project name already exists. Please try again with a new one.\n\n')
+        this.error('❌ It looks like that project already exists. Please try again with a new name.\n\n')
       }
 
       if (str.includes('Done')) {
@@ -39,7 +45,7 @@ export default class Init extends Command {
     })
 
     await createVite
-    ux.action.stop('Finished!')
+    ux.action.stop('finished!')
     return finalOutput
   }
 
@@ -58,6 +64,6 @@ export default class Init extends Command {
       stdio: 'inherit',
     })
 
-    ux.action.stop("Everybody's talking now!")
+    ux.action.stop("everybody's talking now!")
   }
 }
