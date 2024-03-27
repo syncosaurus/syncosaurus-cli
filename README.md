@@ -17,7 +17,7 @@ $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
 running command...
 $ syncosaurus (--version)
-syncosaurus-cli/0.0.1 darwin-arm64 node-v21.1.0
+syncosaurus-cli/0.0.2 darwin-arm64 node-v21.1.0
 $ syncosaurus --help [COMMAND]
 USAGE
   $ syncosaurus COMMAND
@@ -30,7 +30,7 @@ USAGE
 * [`syncosaurus hello PERSON`](#syncosaurus-hello-person)
 * [`syncosaurus hello world`](#syncosaurus-hello-world)
 * [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
-* [`syncosaurus init [FILE]`](#syncosaurus-init-file)
+* [`syncosaurus init`](#syncosaurus-init)
 * [`syncosaurus login`](#syncosaurus-login)
 * [`syncosaurus logout`](#syncosaurus-logout)
 * [`syncosaurus plugins`](#syncosaurus-plugins)
@@ -57,7 +57,7 @@ DESCRIPTION
   Start oncurrent Vite and Wrangler dev servers
 ```
 
-_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/dev.ts)_
+_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/dev.ts)_
 
 ## `syncosaurus hello PERSON`
 
@@ -81,7 +81,7 @@ EXAMPLES
   hello friend from oclif! (./src/commands/hello/index.ts)
 ```
 
-_See code: [src/commands/hello/index.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/hello/index.ts)_
+_See code: [src/commands/hello/index.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/hello/index.ts)_
 
 ## `syncosaurus hello world`
 
@@ -99,7 +99,7 @@ EXAMPLES
   hello world! (./src/commands/hello/world.ts)
 ```
 
-_See code: [src/commands/hello/world.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/hello/world.ts)_
+_See code: [src/commands/hello/world.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/hello/world.ts)_
 
 ## `syncosaurus help [COMMAND]`
 
@@ -121,29 +121,19 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.20/src/commands/help.ts)_
 
-## `syncosaurus init [FILE]`
+## `syncosaurus init`
 
-describe the command here
+Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
 
 ```
 USAGE
-  $ syncosaurus init [FILE] [-f] [-n <value>]
-
-ARGUMENTS
-  FILE  file to read
-
-FLAGS
-  -f, --force
-  -n, --name=<value>  name to print
+  $ syncosaurus init
 
 DESCRIPTION
-  describe the command here
-
-EXAMPLES
-  $ syncosaurus init
+  Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
 ```
 
-_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/init.ts)_
 
 ## `syncosaurus login`
 
@@ -157,7 +147,7 @@ DESCRIPTION
   Login Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/login.ts)_
 
 ## `syncosaurus logout`
 
@@ -171,7 +161,7 @@ DESCRIPTION
   Login Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/logout.ts)_
+_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/logout.ts)_
 
 ## `syncosaurus plugins`
 
@@ -464,5 +454,5 @@ DESCRIPTION
   Check your current login status
 ```
 
-_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.1/src/commands/whoami.ts)_
+_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.2/src/commands/whoami.ts)_
 <!-- commandsstop -->
