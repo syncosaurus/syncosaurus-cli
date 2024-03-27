@@ -12,7 +12,7 @@ export class MyCommand extends Command {
       const wranglerProcess = execa('wrangler', ['dev'], {stdio: 'inherit'})
       Promise.all([viteProcess, wranglerProcess])
     } else {
-      this.log("🦖 Error! It looks like you aren't in a Syncosaurus project.")
+      this.log("🦖 Error! It looks like you aren't in a Syncosaurus project root directory.")
     }
   }
 }
