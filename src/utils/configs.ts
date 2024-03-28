@@ -1,7 +1,7 @@
 export const generateWranglerToml = (projectName: string) => {
   return `name = "${projectName}"
 main = "./index.mjs"
-compatibility_date = "2024-03-27"
+compatibility_date = "2024-02-28"
 
 [[durable_objects.bindings]]
 name = "SYNCOSAURUS_WEBSOCKET_SERVER"
