@@ -19,11 +19,11 @@
   "files": [
     "/bin",
     "/dist",
-    "/oclif.manifest.json",
-    "/templates"
+    "/oclif.manifest.json"
   ],
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "shx rm -rf dist && tsc -b && npm run build:templates",
+    "build:templates": "shx mkdir dist/templates && shx cp -r ./src/templates/* dist/templates",
     "lint": "eslint . --ext .ts",
     "prepack": "npm run build && oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",
