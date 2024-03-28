@@ -13,14 +13,13 @@ export default class Init extends Command {
 
     const viteOutput = await this.createViteProject(projectName)
     await this.integrateSyncosaurus(projectName)
-    await this.copyTemplate()
+    await this.copyTemplate(projectName)
 
-    // TODO add in template react app, copy from node_module into main app
     this.log(`
     Done! Now run:
     
       cd ${projectName}
-      syncosaurus dev\n\n`)
+      npx syncosaurus dev\n\n`)
   }
 
   private async createViteProject(projectName: string) {
@@ -73,9 +72,12 @@ export default class Init extends Command {
     ux.action.stop("everybody's talking now!")
   }
 
-  private async copyTemplate() {
+  private async copyTemplate(projectName: string) {
+    const projectDir = process.cwd() + '/' + projectName + '/src'
     const dirName = path.dirname(new URL(import.meta.url).pathname)
-    const templateDir = path.join(dirName, '../templates')
+    const templateDir = path.join(dirName, '../templates/vite-demo/src/*')
     this.log(templateDir)
+
+    await execa('cp', ['-r', templateDir, projectDir], {shell: true})
   }
 }
