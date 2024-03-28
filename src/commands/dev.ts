@@ -14,6 +14,7 @@ export class MyCommand extends Command {
     if (stdout.includes('syncosaurus.json')) {
       await execa('cp', ['./src/mutators.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./src/authHandler.js', './node_modules/syncosaurus/do'], {shell: true})
+      await execa('cp', ['./syncosaurus.json', './node_modules/syncosaurus/do'], {shell: true})
       const viteProcess = execa('vite', {stdio: 'inherit'})
       const wranglerProcess = execa('wrangler', ['dev', './node_modules/syncosaurus/do/index.mjs'], {stdio: 'inherit'})
       await Promise.all([viteProcess, wranglerProcess])

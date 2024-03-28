@@ -12,6 +12,7 @@ export default class Deploy extends Command {
     if (stdout.includes('syncosaurus.json')) {
       await execa('cp', ['./src/mutators.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./src/authHandler.js', './node_modules/syncosaurus/do'], {shell: true})
+      await execa('cp', ['./syncosaurus.json', './node_modules/syncosaurus/do'], {shell: true})
       const deploy = execa('wrangler', ['deploy', './node_modules/syncosaurus/do/index.mjs'], {stdin: 'inherit'})
 
       ux.action.start('Evolving your Syncosaurus server')
