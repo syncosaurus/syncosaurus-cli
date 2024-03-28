@@ -19,7 +19,8 @@ export const generateSyncoJson = (projectName: string) => {
     "compatibilityDate": "${new Date().toISOString().slice(0, 10)}",
     "encryption": false,
     "authentication": false,
-    "serverMsgFrequency": 16
+    "serverMsgFrequency": 16,
+    "enableRoomStorage": false
   }
   `
 }
