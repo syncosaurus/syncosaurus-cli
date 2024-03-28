@@ -7,14 +7,17 @@
   ],
   "homepage": "https://github.com/syncosaurus/syncosaurus-cli",
   "bugs": "https://github.com/syncosaurus/syncosaurus-cli/issues",
-  "repository": "syncosaurus/syncosaurus-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syncosaurus/syncosaurus-cli.git"
+  },
   "license": "MIT",
   "author": "team2ls",
   "type": "module",
   "exports": "./lib/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "syncosaurus": "./bin/run.js"
+    "syncosaurus": "bin/run.js"
   },
   "files": [
     "/bin",
