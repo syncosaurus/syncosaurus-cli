@@ -18,7 +18,7 @@ $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
 running command...
 $ syncosaurus (--version)
-syncosaurus-cli/0.0.3 darwin-arm64 node-v21.1.0
+syncosaurus-cli/0.1.0 darwin-arm64 node-v21.1.0
 $ syncosaurus --help [COMMAND]
 USAGE
   $ syncosaurus COMMAND
@@ -29,13 +29,30 @@ USAGE
 # Commands
 
 <!-- commands -->
+* [`syncosaurus dashboard`](#syncosaurus-dashboard)
 * [`syncosaurus deploy`](#syncosaurus-deploy)
 * [`syncosaurus dev`](#syncosaurus-dev)
 * [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
 * [`syncosaurus init`](#syncosaurus-init)
 * [`syncosaurus login`](#syncosaurus-login)
 * [`syncosaurus logout`](#syncosaurus-logout)
+* [`syncosaurus setup`](#syncosaurus-setup)
+* [`syncosaurus tail`](#syncosaurus-tail)
 * [`syncosaurus whoami`](#syncosaurus-whoami)
+
+## `syncosaurus dashboard`
+
+Install the Syncosaurus dashboard.
+
+```
+USAGE
+  $ syncosaurus dashboard
+
+DESCRIPTION
+  Install the Syncosaurus dashboard.
+```
+
+_See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/dashboard.ts)_
 
 ## `syncosaurus deploy`
 
@@ -49,7 +66,7 @@ DESCRIPTION
   Deploy your syncosaurus project to the edge
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/deploy.ts)_
 
 ## `syncosaurus dev`
 
@@ -63,7 +80,7 @@ DESCRIPTION
   Start concurrent Vite and Wrangler dev servers
 ```
 
-_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/dev.ts)_
+_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/dev.ts)_
 
 ## `syncosaurus help [COMMAND]`
 
@@ -97,7 +114,7 @@ DESCRIPTION
   Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
 ```
 
-_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/init.ts)_
 
 ## `syncosaurus login`
 
@@ -111,7 +128,7 @@ DESCRIPTION
   Login Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/login.ts)_
 
 ## `syncosaurus logout`
 
@@ -125,7 +142,35 @@ DESCRIPTION
   Login Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/logout.ts)_
+_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/logout.ts)_
+
+## `syncosaurus setup`
+
+Add syncosaurus to an existing React application.
+
+```
+USAGE
+  $ syncosaurus setup
+
+DESCRIPTION
+  Add syncosaurus to an existing React application.
+```
+
+_See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/setup.ts)_
+
+## `syncosaurus tail`
+
+Setup a tail log to a deployed Syncosaurus server.
+
+```
+USAGE
+  $ syncosaurus tail
+
+DESCRIPTION
+  Setup a tail log to a deployed Syncosaurus server.
+```
+
+_See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/tail.ts)_
 
 ## `syncosaurus whoami`
 
@@ -139,5 +184,5 @@ DESCRIPTION
   Check your current login status
 ```
 
-_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.0.3/src/commands/whoami.ts)_
+_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/whoami.ts)_
 <!-- commandsstop -->
