@@ -23,15 +23,21 @@ MSG_FREQUENCY = ${msgFrequency}
 AUTOSAVE_INTERVAL = ${autosaveInterval}`
 }
 
-export const generateSyncoJson = (projectName: string, enableRoomStorage: boolean = false) => {
+export const generateSyncoJson = (
+  projectName: string,
+  enableRoomStorage: boolean = false,
+  msgFrequency: number = 16,
+  autosaveInterval: number = 30000,
+) => {
   return `
   {
     "projectName": "${projectName}",
     "compatibilityDate": "${new Date().toISOString().slice(0, 10)}",
     "encryption": false,
     "authentication": false,
-    "serverMsgFrequency": 16,
+    "serverMsgFrequency": ${msgFrequency},
     "enableRoomStorage": ${enableRoomStorage}
+    "autosaveInterval": ${autosaveInterval}
   }
   `
 }
