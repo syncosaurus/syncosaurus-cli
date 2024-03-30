@@ -1,6 +1,15 @@
 import {Command, ux} from '@oclif/core'
 import {execa} from 'execa'
 import chalk from 'chalk'
+import {generateWranglerToml} from '../utils/configs.js'
+import fs from 'fs'
+
+interface ConfigParams {
+  projectName: string
+  useStorage: boolean
+  msgFrequency: number
+  autosaveInterval: number
+}
 
 export default class Deploy extends Command {
   static description = 'Deploy your syncosaurus project to the edge'
@@ -10,6 +19,21 @@ export default class Deploy extends Command {
 
     // Verify the command is run from the root directory
     if (stdout.includes('syncosaurus.json')) {
+      // Refresh wrangler.toml
+      const configParams = JSON.parse(fs.readFileSync('syncosaurus.json', 'utf-8'))
+      const {projectName, useStorage, msgFrequency, autosaveInterval} = configParams as ConfigParams
+      await execa('rm', ['-f', './node_modules/syncosaurus/do/wrangler.toml'], {shell: true})
+
+      await execa(
+        `echo '${generateWranglerToml(projectName, useStorage, msgFrequency, autosaveInterval)}' > 'wrangler.toml'`,
+        {
+          shell: true,
+          cwd: process.cwd() + '/node_modules/syncosaurus/do',
+          stdio: 'inherit',
+        },
+      )
+
+      // Copy mutators/authhandlers/config file
       await execa('cp', ['./src/mutators.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./src/authHandler.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./syncosaurus.json', './node_modules/syncosaurus/do'], {shell: true})

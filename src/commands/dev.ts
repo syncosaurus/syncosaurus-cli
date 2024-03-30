@@ -22,7 +22,6 @@ export class MyCommand extends Command {
       const {projectName, useStorage, msgFrequency, autosaveInterval} = configParams as ConfigParams
       await execa('rm', ['-f', './node_modules/syncosaurus/do/wrangler.toml'], {shell: true})
 
-      this.log('creating a new toml')
       await execa(
         `echo '${generateWranglerToml(projectName, useStorage, msgFrequency, autosaveInterval)}' > 'wrangler.toml'`,
         {
