@@ -25,7 +25,7 @@ AUTOSAVE_INTERVAL = ${autosaveInterval}`
 
 export const generateSyncoJson = (
   projectName: string,
-  enableRoomStorage: boolean = false,
+  useStorage: boolean = false,
   msgFrequency: number = 16,
   autosaveInterval: number = 30000,
 ) => {
@@ -35,8 +35,8 @@ export const generateSyncoJson = (
     "compatibilityDate": "${new Date().toISOString().slice(0, 10)}",
     "encryption": false,
     "authentication": false,
-    "serverMsgFrequency": ${msgFrequency},
-    "enableRoomStorage": ${enableRoomStorage}
+    "msgFrequency": ${msgFrequency},
+    "useStorage": ${useStorage},
     "autosaveInterval": ${autosaveInterval}
   }
   `

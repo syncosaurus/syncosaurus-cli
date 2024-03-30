@@ -1,6 +1,14 @@
 import {Command} from '@oclif/core'
 import {execa} from 'execa'
+import {generateWranglerToml} from '../utils/configs.js'
 import fs from 'fs'
+
+interface ConfigParams {
+  projectName: string
+  useStorage: boolean
+  msgFrequency: number
+  autosaveInterval: number
+}
 
 export class MyCommand extends Command {
   static description = 'Start concurrent Vite and Wrangler dev servers'
@@ -8,10 +16,22 @@ export class MyCommand extends Command {
   async run(): Promise<void> {
     const {stdout} = await execa('ls')
 
-    const configParams = JSON.parse(fs.readFileSync('syncosaurus.json', 'utf-8'))
-
     // Verify the command is run from the root directory
     if (stdout.includes('syncosaurus.json')) {
+      const configParams = JSON.parse(fs.readFileSync('syncosaurus.json', 'utf-8'))
+      const {projectName, useStorage, msgFrequency, autosaveInterval} = configParams as ConfigParams
+      await execa('rm', ['-f', './node_modules/syncosaurus/do/wrangler.toml'], {shell: true})
+
+      this.log('creating a new toml')
+      await execa(
+        `echo '${generateWranglerToml(projectName, useStorage, msgFrequency, autosaveInterval)}' > 'wrangler.toml'`,
+        {
+          shell: true,
+          cwd: process.cwd() + '/node_modules/syncosaurus/do',
+          stdio: 'inherit',
+        },
+      )
+
       await execa('cp', ['./src/mutators.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./src/authHandler.js', './node_modules/syncosaurus/do'], {shell: true})
       await execa('cp', ['./syncosaurus.json', './node_modules/syncosaurus/do'], {shell: true})
