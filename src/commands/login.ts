@@ -1,12 +1,6 @@
-/* eslint-disable unicorn/no-negated-condition */
-/* eslint-disable unicorn/consistent-destructuring */
-/* eslint-disable perfectionist/sort-interfaces */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable perfectionist/sort-imports */
-/* eslint-disable perfectionist/sort-objects */
-import {select} from '@inquirer/prompts'
-import {Command, ux} from '@oclif/core'
-import {execaCommandSync} from 'execa'
+import { select } from '@inquirer/prompts'
+import { Command, ux } from '@oclif/core'
+import { execaCommandSync } from 'execa'
 import ora from 'ora'
 import fs from 'node:fs'
 import checkLogin from '../utils/login-check.js'
@@ -21,8 +15,12 @@ export default class Login extends Command {
     }
 
     let loginResult: LoginResult = (await checkLogin()) as LoginResult
-    let {loginStatus} = loginResult
+    let { loginStatus, email } = loginResult
     let loginSpinner
+
+    if (loginStatus) {
+      this.log(`You are already logged in with the email ${email}`);
+    }
 
     while (!loginStatus) {
       const loginChoice = await select({
@@ -43,11 +41,11 @@ export default class Login extends Command {
 
       if (loginChoice === 1) {
         loginSpinner = ora('Logging in via OAuth\n').start()
-        execaCommandSync(`npm run login`)
+        execaCommandSync(`npx wrangler login`)
       } else {
         loginSpinner = ora('Logging in via Account ID and API token').start()
-        const accountId = await ux.prompt('What is your Cloudflare Account ID?', {type: 'mask'})
-        const apiToken = await ux.prompt('What is your CloudFlare API Token?', {type: 'mask'})
+        const accountId = await ux.prompt('What is your Cloudflare Account ID?', { type: 'mask' })
+        const apiToken = await ux.prompt('What is your CloudFlare API Token?', { type: 'mask' })
         const writeStream = fs.createWriteStream('.env')
         writeStream.write(`CLOUDFLARE_ACCOUNT_ID=${accountId}\n`)
         writeStream.write(`CLOUDFLARE_API_TOKEN=${apiToken}`)

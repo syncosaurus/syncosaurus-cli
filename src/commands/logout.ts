@@ -17,7 +17,7 @@ export default class Logout extends Command {
     const loginResult: LoginResult = (await checkLogin()) as LoginResult
 
     if (loginResult.loginStatus) {
-      execaCommandSync(`npm run logout`)
+      execaCommandSync(`npx wrangler logout`)
 
       logoutSpinner.stopAndPersist({
         symbol: '✅',

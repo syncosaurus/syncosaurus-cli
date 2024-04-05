@@ -8,6 +8,7 @@
 /package-lock.json
 /tmp
 /yarn.lock
+/syncosaurus-analytics
 node_modules
 oclif.lock
 oclif.manifest.json

@@ -1,34 +1,44 @@
-import {Command, ux} from '@oclif/core'
-import {execa} from 'execa'
+import { Command, ux } from '@oclif/core'
+import { execa } from 'execa'
 
 export default class Dashboard extends Command {
   static description = 'Install the Syncosaurus dashboard.'
 
   public async run(): Promise<void> {
-    const {stdout} = await execa('ls')
+    // Final repo link: 'https://github.com/syncosaurus/analytics-dashboard.git'
+    const dashboardRepoURI = 'https://github.com/syncosaurus/syncosaurus-analytics.git';
+    let { stdout } = await execa('ls')
 
-    if (stdout.includes('analytics-dashboard')) {
-      this.log('🦖 Analytics dashboard already installed!')
-      this.logEndMessage()
-      return
+    ux.action.start('Installing Syncosaurus dashboard...')
+
+    if (!stdout.includes('syncosaurus-analytics')) {
+      // this.log('🦖 Analytics dashboard already installed!')
+      // this.logEndMessage()
+
+      await execa('git', ['clone', '-b', 'bar-charts-with-d3', dashboardRepoURI], {
+        shell: true,
+      })
     }
 
-    ux.action.start('🦖 Cloning the analytics dashboard repo')
-    await execa('git', ['clone', 'https://github.com/syncosaurus/analytics-dashboard.git'], {
-      shell: true,
-    })
+    // await execa('cd', ['../syncosaurus-analytics/analytics-backend'], { shell: true });
+    stdout = (await execa('ls', { cwd: process.cwd() + '/syncosaurus-analytics/analytics-backend', shell: true })).stdout;
+    console.log(stdout);
+    if (!stdout.includes('node_modules')) {
+      await execa('npm install', { cwd: process.cwd() + '/syncosaurus-analytics/analytics-backend', shell: true });
+    }
 
-    await execa('npm install', {cwd: process.cwd() + '/analytics-dashboard', shell: true})
-    ux.action.stop('done!')
-    this.logEndMessage()
-  }
+    ux.action.stop('done! 🦖!')
 
-  private logEndMessage() {
-    this.log(`Dashboard installed.
-    
-  Run:
-
-  cd analytics-dashboard
-  npm start\n`)
+    await execa('npm run start', { cwd: process.cwd() + '/syncosaurus-analytics/analytics-backend', shell: true, stdio: 'inherit' });
   }
 }
+
+// private logEndMessage() {
+//   this.log(`Dashboard installed.
+
+// Run:
+
+// cd analytics-dashboard
+// npm start\n`)
+// }
+
