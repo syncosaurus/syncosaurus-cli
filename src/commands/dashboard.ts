@@ -1,5 +1,5 @@
-import { Command } from '@oclif/core'
-import { execa, ExecaChildProcess } from 'execa'
+import { Command } from '@oclif/core';
+import { execa, ExecaChildProcess } from 'execa';
 import ora from 'ora';
 import checkLogin from "../utils/login-check.js";
 

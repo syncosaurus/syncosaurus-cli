@@ -5,7 +5,7 @@ import path from 'path'
 import {generateSyncoJson, generateWranglerToml} from '../utils/configs.js'
 
 export default class Init extends Command {
-  static description = 'Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.'
+  static description = 'Initialize a new React app, preconfigured with a Syncosaurus multiplayer backend.'
 
   public async run(): Promise<void> {
     this.log('🦖 Creating a new Syncosaurus backed React app!')
@@ -17,7 +17,7 @@ export default class Init extends Command {
 
     this.log(`
     Done! Now run:
-    
+
       cd ${projectName}
       npx syncosaurus dev\n\n`)
   }

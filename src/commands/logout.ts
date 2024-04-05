@@ -4,7 +4,7 @@ import ora from 'ora'
 import checkLogin from '../utils/login-check.js'
 
 export default class Logout extends Command {
-  static description = 'Logout Syncosaurus.'
+  static description = 'Logout of Syncosaurus.'
   public async run(): Promise<void> {
     interface LoginResult {
       loginStatus: boolean

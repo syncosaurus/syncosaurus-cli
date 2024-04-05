@@ -6,7 +6,7 @@ import fs from 'node:fs'
 import checkLogin from '../utils/login-check.js'
 
 export default class Login extends Command {
-  static description = 'Login Synocosaurus through Oauth or API token'
+  static description = 'Login to Synocosaurus through Oauth or API token'
 
   public async run(): Promise<void> {
     interface LoginResult {
