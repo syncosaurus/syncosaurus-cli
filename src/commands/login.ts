@@ -59,7 +59,7 @@ export default class Login extends Command {
       } else {
         loginSpinner.stopAndPersist({
           symbol: '✅',
-          text: `\nYou successfully logged in with the email ${loginResult.email}!`,
+          text: `You successfully logged in with the email ${loginResult.email}!`,
         })
       }
     }

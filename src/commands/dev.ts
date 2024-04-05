@@ -11,7 +11,7 @@ interface ConfigParams {
 }
 
 export class MyCommand extends Command {
-  static description = 'Start concurrent Vite and Wrangler dev servers'
+  static description = 'Start a local Syncosaurus development environment'
 
   async run(): Promise<void> {
     const {stdout} = await execa('ls')

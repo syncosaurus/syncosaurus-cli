@@ -12,7 +12,7 @@ interface ConfigParams {
 }
 
 export default class Deploy extends Command {
-  static description = 'Deploy your syncosaurus project to the edge'
+  static description = 'Deploy your Syncosaurus application'
 
   public async run(): Promise<void> {
     const {stdout} = await execa('ls')

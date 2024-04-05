@@ -20,23 +20,27 @@ export default class Dashboard extends Command {
       return;
     }
 
-    // Final repo link: 'https://github.com/syncosaurus/analytics-dashboard.git'
-    const dashboardRepoURI = 'https://github.com/syncosaurus/syncosaurus-analytics.git';
-    const installCheck = ora('Checking for Syncosaurus dashboard...').start();
+    const dashboardRepoURI = 'https://github.com/syncosaurus/syncosaurus-dashboard.git';
+    const installCheck = ora('Checking for Syncosaurus dashboard installation...').start();
 
     try {
       const { stdout } = await execa('ls');
 
-      if (!stdout.includes('syncosaurus-analytics')) {
+      if (!stdout.includes('syncosaurus-dashboard')) {
         installCheck.stopAndPersist({
           text: `No Syncosaurus dashboard installation found`,
         });
         const cloneAndInstall = ora('Installing Syncosaurus dashboard...').start();
-        await execa('git', ['clone', '-b', 'bar-charts-with-d3', dashboardRepoURI]);
+        await execa('git', ['clone', dashboardRepoURI]);
 
         await execa('npm', ['install'], {
-          cwd: `${process.cwd()}/syncosaurus-analytics/analytics-backend`,
+          cwd: `${process.cwd()}/syncosaurus-dashboard`,
         });
+
+        await execa('rm', ['-r', '.git'], {
+          cwd: `${process.cwd()}/syncosaurus-dashboard`,
+        });
+
         cloneAndInstall.stopAndPersist({
           symbol: '✅',
           text: `Syncosaurus dashboard successfully installed`,
@@ -52,7 +56,7 @@ export default class Dashboard extends Command {
 
       const child: ExecaChildProcess<string> | null = execa(`npm start`, {
         shell: true,
-        cwd: `${process.cwd()}/syncosaurus-analytics/analytics-backend`,
+        cwd: `${process.cwd()}/syncosaurus-dashboard`,
         env: process.env,
         stdio: ['inherit', 'pipe', 'pipe'],
         encoding: 'utf8',

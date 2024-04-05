@@ -1,10 +1,10 @@
-import {Command} from '@oclif/core'
-import {execaCommandSync} from 'execa'
+import { Command } from '@oclif/core'
+import { execaCommandSync } from 'execa'
 import ora from 'ora'
 import checkLogin from '../utils/login-check.js'
 
 export default class Logout extends Command {
-  static description = 'Login Synocosaurus through Oauth or API token'
+  static description = 'Logout Syncosaurus.'
   public async run(): Promise<void> {
     interface LoginResult {
       loginStatus: boolean
@@ -23,7 +23,7 @@ export default class Logout extends Command {
       })
     } else {
       logoutSpinner.stopAndPersist({
-        symbol: '✅',
+        symbol: '❌',
         text: `You are already logged out!`,
       })
     }
