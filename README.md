@@ -42,14 +42,14 @@ USAGE
 
 ## `syncosaurus dashboard`
 
-Install the Syncosaurus dashboard.
+Install and run the Syncosaurus analytics dashboard
 
 ```
 USAGE
   $ syncosaurus dashboard
 
 DESCRIPTION
-  Install the Syncosaurus dashboard.
+  Install and run the Syncosaurus analytics dashboard
 ```
 
 _See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/dashboard.ts)_

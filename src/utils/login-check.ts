@@ -10,4 +10,5 @@ const checkLogin = async () => {
 
   return { loginStatus, email }
 }
+
 export default checkLogin
