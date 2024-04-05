@@ -1,8 +1,6 @@
-/* eslint-disable perfectionist/sort-interfaces */
 import {Command} from '@oclif/core'
 import {execaCommandSync} from 'execa'
 import ora from 'ora'
-
 import checkLogin from '../utils/login-check.js'
 
 export default class Logout extends Command {

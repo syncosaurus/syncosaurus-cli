@@ -1,7 +1,4 @@
-/* eslint-disable perfectionist/sort-interfaces */
-/* eslint-disable perfectionist/sort-objects */
 import {Command} from '@oclif/core'
-
 import checkLogin from '../utils/login-check.js'
 
 export default class Whoami extends Command {

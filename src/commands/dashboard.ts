@@ -66,7 +66,6 @@ export default class Dashboard extends Command {
       });
 
       child.stderr!.on('data', (data) => {
-        // console.error(data.toString());
       });
 
       child!.on("close", (_code) => {
