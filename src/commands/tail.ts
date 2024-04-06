@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { execa } from 'execa';
 
 export default class Tail extends Command {
-  static description = 'Setup a tail log stream for a deployed Syncosaurus worker.';
+  static description = 'Setup a tail log stream for a deployed Syncosaurus worker';
 
   public async run(): Promise<void> {
     const { stdout } = await execa('ls');

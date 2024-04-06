@@ -56,28 +56,28 @@ _See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosauru
 
 ## `syncosaurus deploy`
 
-Deploy your syncosaurus project to the edge
+Deploy your Syncosaurus application
 
 ```
 USAGE
   $ syncosaurus deploy
 
 DESCRIPTION
-  Deploy your syncosaurus project to the edge
+  Deploy your Syncosaurus application
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/deploy.ts)_
 
 ## `syncosaurus dev`
 
-Start concurrent Vite and Wrangler dev servers
+Start a local Syncosaurus development environment
 
 ```
 USAGE
   $ syncosaurus dev
 
 DESCRIPTION
-  Start concurrent Vite and Wrangler dev servers
+  Start a local Syncosaurus development environment
 ```
 
 _See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/dev.ts)_
@@ -104,42 +104,42 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.2
 
 ## `syncosaurus init`
 
-Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
+Create a new React app, preconfigured with a Syncosaurus multiplayer backend.
 
 ```
 USAGE
   $ syncosaurus init
 
 DESCRIPTION
-  Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
+  Create a new React app, preconfigured with a Syncosaurus multiplayer backend.
 ```
 
 _See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/init.ts)_
 
 ## `syncosaurus login`
 
-Login Synocosaurus through Oauth or API token
+Login to Synocosaurus through Oauth or API token
 
 ```
 USAGE
   $ syncosaurus login
 
 DESCRIPTION
-  Login Synocosaurus through Oauth or API token
+  Login to Synocosaurus through Oauth or API token
 ```
 
 _See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/login.ts)_
 
 ## `syncosaurus logout`
 
-Login Synocosaurus through Oauth or API token
+Logout of Syncosaurus.
 
 ```
 USAGE
   $ syncosaurus logout
 
 DESCRIPTION
-  Login Synocosaurus through Oauth or API token
+  Logout of Syncosaurus.
 ```
 
 _See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/logout.ts)_
@@ -160,28 +160,28 @@ _See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cl
 
 ## `syncosaurus tail`
 
-Setup a tail log to a deployed Syncosaurus server.
+Setup a tail log stream for a deployed Syncosaurus worker.
 
 ```
 USAGE
   $ syncosaurus tail
 
 DESCRIPTION
-  Setup a tail log to a deployed Syncosaurus server.
+  Setup a tail log stream for a deployed Syncosaurus worker.
 ```
 
 _See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/tail.ts)_
 
 ## `syncosaurus whoami`
 
-Check your current login status
+Check your current Syncosaurus login status
 
 ```
 USAGE
   $ syncosaurus whoami
 
 DESCRIPTION
-  Check your current login status
+  Check your current Syncosaurus login status
 ```
 
 _See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/whoami.ts)_

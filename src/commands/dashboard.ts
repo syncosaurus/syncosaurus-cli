@@ -4,7 +4,7 @@ import ora from 'ora';
 import checkLogin from "../utils/login-check.js";
 
 export default class Dashboard extends Command {
-  static description = 'Install and run the Syncosaurus analytics dashboard';
+  static description = 'Run the Syncosaurus analytics dashboard';
 
   public async run(): Promise<void> {
     interface LoginResult {

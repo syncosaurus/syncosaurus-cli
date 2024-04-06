@@ -4,7 +4,7 @@ import { input } from '@inquirer/prompts'
 import { generateSyncoJson, generateWranglerToml } from '../utils/configs.js'
 
 export default class Setup extends Command {
-  static description = 'Add syncosaurus to an existing React application.'
+  static description = 'Add syncosaurus to an existing React application'
 
   public async run(): Promise<void> {
     const { stdout } = await execa('ls')
