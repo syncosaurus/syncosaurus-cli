@@ -98,7 +98,7 @@ export default class Init extends Command {
   private async copyTemplate(projectName: string) {
     const projectDir = process.cwd() + '/' + projectName;
     const dirName = path.dirname(new URL(import.meta.url).pathname)
-    const templateDir = path.join(dirName, '../templates/vite-template')
+    const templateDir = path.join(dirName, '../templates/vite-template/*')
 
     await execa('cp', ['-r', templateDir, projectDir], { shell: true })
   }
