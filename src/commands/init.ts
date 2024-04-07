@@ -32,9 +32,9 @@ export default class Init extends Command {
     });
 
     // install Syncosaurus CLI application only if user confirms 'yes'
-    const { stdout: syncoCliStdout } = await execa('npm', ['list', 'syncosaurus-cli'], { cwd: `${process.cwd()}/${projectName}` });
+    const { stdout: syncoCliStdout } = await execa('npm', ['list'], { cwd: `${process.cwd()}/${projectName}` });
 
-    if (syncoCliStdout.includes('(empty)')) {
+    if (!syncoCliStdout.includes('syncosaurus-cli')) {
       const cliChoiceAnswer = await confirm({ message: 'Do you want to install the Syncosaurus CLI tool?' });
       if (cliChoiceAnswer) {
         const cliInstall = ora('Installing Syncosaurus CLI tool...').start();
