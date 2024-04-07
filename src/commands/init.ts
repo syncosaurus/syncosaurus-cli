@@ -33,10 +33,14 @@ export default class Init extends Command {
       text: "🦖 ↔️ 🦖 Setting up inter-syncosaurus communication channels...everybody's talking now!"
     });
 
-    // install Syncosaurus CLI application only if user confirms AND it is not installed yet
-    const { stdout: syncoCliStdout } = await execa('npm', ['list', '-g'], { cwd: `${process.cwd()}/${projectName}` });
+    // check and install Syncosaurus CLI application only if user confirms AND it is not installed yet
 
-    if (!syncoCliStdout.includes('syncosaurus-cli') && cliChoiceAnswer) {
+    if (cliChoiceAnswer) {
+      const cliCheck = ora('Checking for Syncosaurus CLI installation...').start();
+      const { stdout: syncoCliStdout } = await execa('npm', ['list', '-g'], { cwd: `${process.cwd()}/${projectName}` });
+      const cliInstallationExists = syncoCliStdout.includes('syncosaurus-cli');
+      cliCheck.stopAndPersist({ text: `Checking for Syncosaurus CLI installation...done!` });
+      if (!cliInstallationExists && cliChoiceAnswer) {
         const cliInstall = ora('🤖 Installing Syncosaurus CLI tool...').start();
 
         await execa('npm', ['install', '-g', 'syncosaurus-cli'], {
@@ -44,8 +48,9 @@ export default class Init extends Command {
         });
 
         cliInstall.stopAndPersist({ text: "🤖 Installing Syncosaurus CLI tool...complete!" });
-    } else if (syncoCliStdout.includes('syncosaurus-cli') && cliChoiceAnswer) {
-      this.log("🤖 Syncosaurus CLI tool is already installed!");
+      } else if (cliInstallationExists && cliChoiceAnswer) {
+        this.log("🤖 Syncosaurus CLI tool is already installed!");
+      }
     }
 
     this.log(`
