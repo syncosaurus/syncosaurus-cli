@@ -43,7 +43,7 @@ export default class Init extends Command {
           cwd: `${process.cwd()}/${projectName}`
         });
 
-        cliInstall.stopAndPersist({ text: 'done!'});
+        cliInstall.stopAndPersist({ text: 'done!' });
       }
     }
 
@@ -77,9 +77,13 @@ export default class Init extends Command {
       stdio: 'inherit',
     });
 
-    // copy vite template and install necessary dependencies
+    // copy vite template and install syncosaurus + necessary dependencies
     await this.copyTemplate(projectName);
-    await execa('npm', ['install'], {
+    await execa('npm', ['ci'], {
+      cwd: projectDir,
+    });
+
+    await execa('npm', ['install', 'syncosaurus'], {
       cwd: projectDir,
     });
 
