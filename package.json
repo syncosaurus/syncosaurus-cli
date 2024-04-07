@@ -1,6 +1,6 @@
 {
   "name": "syncosaurus-cli",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Syncosaurus CLI to create and manage Syncosaurus backed React applications.",
   "keywords": [
     "oclif"
