@@ -44,6 +44,8 @@ export default class Init extends Command {
         });
 
         cliInstall.stopAndPersist({ text: "🤖 Installing Syncosaurus CLI tool...complete!" });
+    } else if (syncoCliStdout.includes('syncosaurus-cli') && cliChoiceAnswer) {
+      this.log("🤖 Syncosaurus CLI tool is already installed!");
     }
 
     this.log(`
