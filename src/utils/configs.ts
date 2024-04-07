@@ -8,7 +8,7 @@ export const generateWranglerToml = (
 ) => {
   return `name = "${projectName}"
 main = "./index.mjs"
-compatibility_date = ${COMPATIBILITY_DATE}
+compatibility_date = "${COMPATIBILITY_DATE}"
 
 [[durable_objects.bindings]]
 name = "SYNCOSAURUS_WEBSOCKET_SERVER"
@@ -34,7 +34,7 @@ export const generateSyncoJson = (
   return `
   {
     "projectName": "${projectName}",
-    "compatibilityDate": "$${COMPATIBILITY_DATE}",
+    "compatibilityDate": "${COMPATIBILITY_DATE}",
     "msgFrequency": ${msgFrequency},
     "useStorage": ${useStorage},
     "autosaveInterval": ${autosaveInterval}

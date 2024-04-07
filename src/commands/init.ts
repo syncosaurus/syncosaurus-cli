@@ -63,7 +63,7 @@ export default class Init extends Command {
 
     viteProjectCreation.stopAndPersist({
       symbol: '✅',
-      text: `finished!`,
+      text: `🧙 Engaging dino wizardry to scaffold your project...finished!`,
     });
   }
 
