@@ -28,7 +28,7 @@ export default class Init extends Command {
     await this.copyTemplate(projectName);
 
     syncoIntegration.stopAndPersist({
-      text: "everybody's talking now!"
+      text: "🦖 ↔️ 🦖 Setting up inter-syncosaurus communication channels...everybody's talking now!"
     });
 
     // install Syncosaurus CLI application only if user confirms 'yes'
@@ -37,13 +37,13 @@ export default class Init extends Command {
     if (!syncoCliStdout.includes('syncosaurus-cli')) {
       const cliChoiceAnswer = await confirm({ message: 'Do you want to install the Syncosaurus CLI tool?' });
       if (cliChoiceAnswer) {
-        const cliInstall = ora('Installing Syncosaurus CLI tool...').start();
+        const cliInstall = ora('🤖 Installing Syncosaurus CLI tool...').start();
 
         await execa('npm', ['install', 'syncosaurus-cli'], {
           cwd: `${process.cwd()}/${projectName}`
         });
 
-        cliInstall.stopAndPersist({ text: 'done!' });
+        cliInstall.stopAndPersist({ text: "🤖 Installing Syncosaurus CLI tool...complete!" });
       }
     }
 
@@ -62,8 +62,7 @@ export default class Init extends Command {
     });
 
     viteProjectCreation.stopAndPersist({
-      symbol: '✅',
-      text: `🧙 Engaging dino wizardry to scaffold your project...finished!`,
+      text: `🧙 Engaging dino wizardry to scaffold your project...done!`,
     });
   }
 
