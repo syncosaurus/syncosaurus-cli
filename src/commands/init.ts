@@ -34,7 +34,6 @@ export default class Init extends Command {
     });
 
     // check and install Syncosaurus CLI application only if user confirms AND it is not installed yet
-
     if (cliChoiceAnswer) {
       const cliCheck = ora('Checking for Syncosaurus CLI installation...').start();
       const { stdout: syncoCliStdout } = await execa('npm', ['list', '-g'], { cwd: `${process.cwd()}/${projectName}` });
