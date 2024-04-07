@@ -18,7 +18,7 @@ $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
 running command...
 $ syncosaurus (--version)
-syncosaurus-cli/0.2.0 linux-x64 node-v21.7.1
+syncosaurus-cli/0.3.0 linux-x64 node-v21.7.1
 $ syncosaurus --help [COMMAND]
 USAGE
   $ syncosaurus COMMAND
@@ -52,7 +52,7 @@ DESCRIPTION
   Run the Syncosaurus analytics dashboard
 ```
 
-_See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/dashboard.ts)_
+_See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/dashboard.ts)_
 
 ## `syncosaurus deploy`
 
@@ -66,7 +66,7 @@ DESCRIPTION
   Deploy your Syncosaurus application
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/deploy.ts)_
 
 ## `syncosaurus dev`
 
@@ -80,7 +80,7 @@ DESCRIPTION
   Start a local Syncosaurus development environment
 ```
 
-_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/dev.ts)_
+_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/dev.ts)_
 
 ## `syncosaurus help [COMMAND]`
 
@@ -114,7 +114,7 @@ DESCRIPTION
   Create a new React app, preconfigured with a Syncosaurus multiplayer backend
 ```
 
-_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/init.ts)_
 
 ## `syncosaurus login`
 
@@ -128,7 +128,7 @@ DESCRIPTION
   Login to Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/login.ts)_
 
 ## `syncosaurus logout`
 
@@ -142,7 +142,7 @@ DESCRIPTION
   Logout of Syncosaurus
 ```
 
-_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/logout.ts)_
+_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/logout.ts)_
 
 ## `syncosaurus setup`
 
@@ -156,7 +156,7 @@ DESCRIPTION
   Add syncosaurus to an existing React application
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/setup.ts)_
 
 ## `syncosaurus tail`
 
@@ -170,7 +170,7 @@ DESCRIPTION
   Setup a tail log stream for a deployed Syncosaurus worker
 ```
 
-_See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/tail.ts)_
+_See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/tail.ts)_
 
 ## `syncosaurus whoami`
 
@@ -184,5 +184,5 @@ DESCRIPTION
   Check your current Syncosaurus login status
 ```
 
-_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/whoami.ts)_
+_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.3.0/src/commands/whoami.ts)_
 <!-- commandsstop -->
