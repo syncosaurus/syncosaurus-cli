@@ -42,14 +42,14 @@ USAGE
 
 ## `syncosaurus dashboard`
 
-Install and run the Syncosaurus analytics dashboard
+Run the Syncosaurus analytics dashboard
 
 ```
 USAGE
   $ syncosaurus dashboard
 
 DESCRIPTION
-  Install and run the Syncosaurus analytics dashboard
+  Run the Syncosaurus analytics dashboard
 ```
 
 _See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/dashboard.ts)_
@@ -104,14 +104,14 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.2
 
 ## `syncosaurus init`
 
-Create a new React app, preconfigured with a Syncosaurus multiplayer backend.
+Create a new React app, preconfigured with a Syncosaurus multiplayer backend
 
 ```
 USAGE
   $ syncosaurus init
 
 DESCRIPTION
-  Create a new React app, preconfigured with a Syncosaurus multiplayer backend.
+  Create a new React app, preconfigured with a Syncosaurus multiplayer backend
 ```
 
 _See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/init.ts)_
@@ -132,42 +132,42 @@ _See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cl
 
 ## `syncosaurus logout`
 
-Logout of Syncosaurus.
+Logout of Syncosaurus
 
 ```
 USAGE
   $ syncosaurus logout
 
 DESCRIPTION
-  Logout of Syncosaurus.
+  Logout of Syncosaurus
 ```
 
 _See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/logout.ts)_
 
 ## `syncosaurus setup`
 
-Add syncosaurus to an existing React application.
+Add syncosaurus to an existing React application
 
 ```
 USAGE
   $ syncosaurus setup
 
 DESCRIPTION
-  Add syncosaurus to an existing React application.
+  Add syncosaurus to an existing React application
 ```
 
 _See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/setup.ts)_
 
 ## `syncosaurus tail`
 
-Setup a tail log stream for a deployed Syncosaurus worker.
+Setup a tail log stream for a deployed Syncosaurus worker
 
 ```
 USAGE
   $ syncosaurus tail
 
 DESCRIPTION
-  Setup a tail log stream for a deployed Syncosaurus worker.
+  Setup a tail log stream for a deployed Syncosaurus worker
 ```
 
 _See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.2.0/src/commands/tail.ts)_
