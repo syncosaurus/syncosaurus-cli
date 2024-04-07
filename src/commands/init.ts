@@ -21,35 +21,34 @@ export default class Init extends Command {
       lsStdout = (await execa('ls')).stdout;
     }
 
-    let needCliInstall = false;
-    const { stdout: syncoCliStdout } = await execa('npm', ['list', 'syncosaurus-cli'], { cwd: `${process.cwd()}/${projectName}` });
-
-    if (syncoCliStdout.includes('(empty)')) {
-      const cliChoiceAnswer = await confirm({ message: 'Do you want to install the Syncosaurus CLI tool?' });
-      if (cliChoiceAnswer) {
-        needCliInstall = true;
-      }
-    }
-
     const syncoIntegration = ora('🦖 ↔️ 🦖 Setting up inter-syncosaurus communication channels...').start();
 
     await this.createViteProject(projectName);
     await this.integrateSyncosaurus(projectName);
     await this.copyTemplate(projectName);
 
-    // install Syncosaurus CLI application only if user chose 'yes'
-    if (needCliInstall) {
-      await execa('npm', ['install', 'syncosaurus-cli'], {
-        cwd: `${process.cwd()}/${projectName}`
-      });
-    }
-
     syncoIntegration.stopAndPersist({
       text: "everybody's talking now!"
     });
 
+    // install Syncosaurus CLI application only if user confirms 'yes'
+    const { stdout: syncoCliStdout } = await execa('npm', ['list', 'syncosaurus-cli'], { cwd: `${process.cwd()}/${projectName}` });
+
+    if (syncoCliStdout.includes('(empty)')) {
+      const cliChoiceAnswer = await confirm({ message: 'Do you want to install the Syncosaurus CLI tool?' });
+      if (cliChoiceAnswer) {
+        const cliInstall = ora('Installing Syncosaurus CLI tool...').start();
+
+        await execa('npm', ['install', 'syncosaurus-cli'], {
+          cwd: `${process.cwd()}/${projectName}`
+        });
+
+        cliInstall.stopAndPersist({ text: 'done!'});
+      }
+    }
+
     this.log(`
-    Done! Now run:
+    All done! Now run:
 
       cd ${projectName}
       npx syncosaurus dev\n`);
