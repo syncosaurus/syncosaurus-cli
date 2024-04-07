@@ -77,17 +77,17 @@ export default class Init extends Command {
       stdio: 'inherit',
     });
 
+    // copy vite template and install necessary dependencies
+    await this.copyTemplate(projectName);
+    await execa('npm', ['install'], {
+      cwd: projectDir,
+    });
+
     // Create new project's wrangler.toml file
     await execa(`echo '${generateWranglerToml(projectName)}' > 'wrangler.toml'`, {
       cwd: projectDir + '/node_modules/syncosaurus/do',
       shell: true,
       stdio: 'inherit',
-    });
-
-    // copy vite template and install necessary dependencies
-    await this.copyTemplate(projectName);
-    await execa('npm', ['install'], {
-      cwd: projectDir,
     });
   }
 
