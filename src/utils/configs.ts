@@ -1,3 +1,5 @@
+const COMPATIBILITY_DATE = "2024-04-05";
+
 export const generateWranglerToml = (
   projectName: string,
   useStorage: boolean = true,
@@ -6,7 +8,7 @@ export const generateWranglerToml = (
 ) => {
   return `name = "${projectName}"
 main = "./index.mjs"
-compatibility_date = "2024-02-28"
+compatibility_date = ${COMPATIBILITY_DATE}
 
 [[durable_objects.bindings]]
 name = "SYNCOSAURUS_WEBSOCKET_SERVER"
@@ -32,9 +34,7 @@ export const generateSyncoJson = (
   return `
   {
     "projectName": "${projectName}",
-    "compatibilityDate": "${new Date().toISOString().slice(0, 10)}",
-    "encryption": false,
-    "authentication": false,
+    "compatibilityDate": "$${COMPATIBILITY_DATE}",
     "msgFrequency": ${msgFrequency},
     "useStorage": ${useStorage},
     "autosaveInterval": ${autosaveInterval}

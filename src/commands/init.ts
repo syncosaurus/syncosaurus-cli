@@ -1,8 +1,10 @@
-import { Command, ux } from '@oclif/core';
+import { Command } from '@oclif/core';
+import confirm from '@inquirer/confirm'
 import { execa } from 'execa';
 import { input } from '@inquirer/prompts';
 import path from 'node:path';
 import { generateSyncoJson, generateWranglerToml } from '../utils/configs.js';
+import ora from 'ora';
 
 export default class Init extends Command {
   static description = 'Create a new React app, preconfigured with a Syncosaurus multiplayer backend'
@@ -11,7 +13,7 @@ export default class Init extends Command {
     this.log('🦖 Creating a new Syncosaurus backed React app!');
 
     let projectName = await input({ message: 'What is the name of your project?' });
-    let { stdout:lsStdout } = await execa('ls');
+    let { stdout: lsStdout } = await execa('ls');
 
     while (lsStdout.includes(projectName)) {
       this.log(`❌ A directory with the name of '${projectName}' already exists. Try again with a different name.\n`);
@@ -19,36 +21,55 @@ export default class Init extends Command {
       lsStdout = (await execa('ls')).stdout;
     }
 
+    let needCliInstall = false;
+    const { stdout: syncoCliStdout } = await execa('npm', ['list', 'syncosaurus-cli'], { cwd: `${process.cwd()}/${projectName}` });
+
+    if (syncoCliStdout.includes('(empty)')) {
+      const cliChoiceAnswer = await confirm({ message: 'Do you want to install the Syncosaurus CLI tool?' });
+      if (cliChoiceAnswer) {
+        needCliInstall = true;
+      }
+    }
+
+    const syncoIntegration = ora('🦖 ↔️ 🦖 Setting up inter-syncosaurus communication channels...').start();
+
     await this.createViteProject(projectName);
     await this.integrateSyncosaurus(projectName);
     await this.copyTemplate(projectName);
+
+    // install Syncosaurus CLI application only if user chose 'yes'
+    if (needCliInstall) {
+      await execa('npm', ['install', 'syncosaurus-cli'], {
+        cwd: `${process.cwd()}/${projectName}`
+      });
+    }
+
+    syncoIntegration.stopAndPersist({
+      text: "everybody's talking now!"
+    });
 
     this.log(`
     Done! Now run:
 
       cd ${projectName}
-      npm install
       npx syncosaurus dev\n`);
   }
 
   private async createViteProject(projectName: string) {
-    ux.action.start('🧙 Engaging dino wizardry to scaffold your project');
+    const viteProjectCreation = ora('🧙 Engaging dino wizardry to scaffold your project...').start();
 
-    const createVite = execa('npm', ['create', 'vite@latest', projectName, '--', '--template', 'react'], {
+    await execa('npm', ['create', 'vite@latest', projectName, '--', '--template', 'react'], {
       stdin: 'inherit',
     });
 
-    await createVite;
-    ux.action.stop('finished!');
+    viteProjectCreation.stopAndPersist({
+      symbol: '✅',
+      text: `finished!`,
+    });
   }
 
   private async integrateSyncosaurus(projectName: string) {
     const projectDir = process.cwd() + '/' + projectName;
-
-    ux.action.start('🦖 ↔️ 🦖 Setting up inter-syncosaurus communication channels');
-    await execa('npm', ['install', 'syncosaurus'], {
-      cwd: projectDir,
-    });
 
     // Create the syncosaurus config file
     await execa(`echo '${generateSyncoJson(projectName)}' > 'syncosaurus.json'`, {
@@ -64,13 +85,17 @@ export default class Init extends Command {
       stdio: 'inherit',
     });
 
-    ux.action.stop("everybody's talking now!")
+    // copy vite template and install necessary dependencies
+    await this.copyTemplate(projectName);
+    await execa('npm', ['install'], {
+      cwd: projectDir,
+    });
   }
 
   private async copyTemplate(projectName: string) {
     const projectDir = process.cwd() + '/' + projectName + '/src'
     const dirName = path.dirname(new URL(import.meta.url).pathname)
-    const templateDir = path.join(dirName, '../templates/vite-demo/src/*')
+    const templateDir = path.join(dirName, '../templates/vite-template/src/*')
 
     await execa('cp', ['-r', templateDir, projectDir], { shell: true })
   }
