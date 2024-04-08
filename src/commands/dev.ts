@@ -73,7 +73,7 @@ export class MyCommand extends Command {
       wranglerChildProcess.stdout!.on('data', (data) => {
         const str = data.toString();
         const boxSnippet = '╭───────────';
-        const keyWranglerPhrase = '[wrangler:inf] Ready on http';
+        const keyWranglerPhrase = 'http://localhost:';
 
         if (str.includes(keyWranglerPhrase)) {
           ux.action.stop('done!\n');
