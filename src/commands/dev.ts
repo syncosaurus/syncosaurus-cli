@@ -77,9 +77,11 @@ export class MyCommand extends Command {
 
         if (str.includes(keyWranglerPhrase)) {
           ux.action.stop('done!\n');
+          this.log(chalk.green('-'.repeat(50)));
           const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet, str.indexOf(keyWranglerPhrase)) - 1);
-          this.log(`🦖 Syncosaurus local dev server ready: ${chalk.yellowBright(url)}\n`);
-          this.log("  Press 'b' to open this page in your browser. Press 'x' to gracefully exit");
+          this.log(`🦖 Your local Syncosaurus dev worker is ready at ${chalk.yellowBright.underline(url)}\n`);
+          this.log("  Press 'x' to gracefully exit");
+          return;
         }
       });
 

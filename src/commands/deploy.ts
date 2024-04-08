@@ -1,7 +1,6 @@
 import { Command, ux } from '@oclif/core';
 import { execa } from 'execa';
 import chalk from 'chalk';
-import ora from 'ora';
 import { generateWranglerToml } from '../utils/configs.js';
 import fs from 'node:fs';
 
@@ -21,16 +20,18 @@ export default class Deploy extends Command {
 
     if (inSyncoRoot) {
       // Ensure that Syncosaurus is installed
-      const verifySyncoInstall = ora('Checking for Syncosaurus installation...').start();
+     ux.action.start('Checking for Syncosaurus installation...');
       const syncoPackageExists = fs.readdirSync(`${process.cwd()}/node_modules`).includes('syncosaurus');
       if (!syncoPackageExists) {
-        verifySyncoInstall.stopAndPersist({ text: 'Checking for Syncosaurus installation...not found' })
-        const syncoInstall = ora('Installing syncosaurus as a dependency...');
+        ux.action.stop('not found');
+        ux.action.start('Installing syncosaurus as a dependency...');
         await execa('npm', ['install', 'syncosaurus'], { cwd: process.cwd() });
-        syncoInstall.stopAndPersist({ text: 'Installing syncosaurus as a dependency...done' });
+        ux.action.stop('done');
+      } else {
+        ux.action.stop('found');
       }
 
-      verifySyncoInstall.stopAndPersist({ text: 'Checking for Syncosaurus installation...found' });
+      ux.action.start('Deploying your Syncosaurus worker...');
 
       // Refresh wrangler.toml
       const configParams = JSON.parse(fs.readFileSync('syncosaurus.json', 'utf-8'))
@@ -62,29 +63,23 @@ export default class Deploy extends Command {
 
       const deploy = execa('wrangler', ['deploy', './node_modules/syncosaurus/do/index.mjs'], { stdin: 'inherit' });
 
-      ux.action.start('Evolving your Syncosaurus server...');
       deploy.stdout?.on('data', async (data) => {
-        let str = data.toString();
-        let successMsg;
+        const str = data.toString();
         let urlMsg;
 
-        if (str.includes('⛅️') && !successMsg) {
-          str = str.replace('⛅️', '🦖');
-          str = str.replace(/wrangler.+\)/, 'syncosaurus 0.4.2');
-          str = str.replace(/-+/, chalk.green('-'.repeat(50)));
-          this.log(str);
-          successMsg = true;
-        } else if (str.includes('https') && !urlMsg) {
-          ux.action.stop('Evolving your Syncosaurus server...done!');
-          const url = str.match(/http.+dev/);
-          this.log(`✅ Success! Your Syncosaurus server is available at\n  ${chalk.yellowBright(url)}`);
+        if (str.includes('https') && !urlMsg) {
           urlMsg = true;
+          ux.action.stop('done!');
+          this.log(chalk.green('-'.repeat(50)));
+          const url = str.match(/http.+dev/);
+          this.log(`🦖 Your deployed Syncosaurus worker is ready at ${chalk.yellowBright.underline(url)}`);
+          return;
         }
       })
 
       await deploy;
     } else {
-      this.log("🦖 Error! It looks like you aren't in a Syncosaurus project root directory.");
+      this.error("Not in a Syncosaurus root directory. Expected 'syncosaurus.json' configuration file not found.")
     }
   }
 }
