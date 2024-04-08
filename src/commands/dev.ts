@@ -73,14 +73,16 @@ export class MyCommand extends Command {
       wranglerChildProcess.stdout!.on('data', (data) => {
         const str = data.toString();
         const boxSnippet = '╭───────────';
-        const keyWranglerPhrase = 'http://localhost:';
+        const keyWranglerPhrase = '[wrangler:inf] Ready on http://localhost:';
+        let urlMsg;
 
-        if (str.includes(keyWranglerPhrase)) {
+        if (str.includes(keyWranglerPhrase) && !urlMsg) {
+          urlMsg = true;
           ux.action.stop('done!\n');
           this.log(chalk.green('-'.repeat(50)));
-          const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet, str.indexOf(keyWranglerPhrase)) - 1);
-          this.log(`🦖 Your local Syncosaurus dev worker is ready at ${chalk.yellowBright.underline(url)}\n`);
-          this.log("  Press 'x' to gracefully exit");
+          const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet));
+          this.log(`🦖 Your local Syncosaurus worker is ready at ${chalk.yellowBright.underline(url)}`);
+          this.log("  NOTE: Press 'b' to open in browser. Press 'x' to gracefully exist");
           return;
         }
       });
