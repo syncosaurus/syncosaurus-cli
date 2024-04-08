@@ -1,16 +1,10 @@
 import { Command, ux } from '@oclif/core';
 import { execa, ExecaChildProcess } from 'execa';
 import { generateWranglerToml } from '../utils/configs.js';
+import readline from 'node:readline';
 import chalk from 'chalk';
 import fs from 'node:fs';
-
-interface ConfigParams {
-  projectName: string
-  useStorage: boolean
-  msgFrequency: number
-  autosaveInterval: number
-}
-
+import { ConfigParams } from "../types.js";
 export class MyCommand extends Command {
   static description = 'Start a local Syncosaurus development environment';
 
@@ -60,6 +54,7 @@ export class MyCommand extends Command {
         await execa('cp', [`${process.cwd()}/src/authHandler.js`, `${process.cwd()}/node_modules/syncosaurus/do`], { shell: true });
       }
 
+      // Execute child process to extract local wrangler dev server URL
       const wranglerChildProcess: ExecaChildProcess<string> | null = execa('wrangler', ['dev', './node_modules/syncosaurus/do/index.mjs'], {
         cwd: process.cwd(),
         env: process.env,
@@ -68,28 +63,83 @@ export class MyCommand extends Command {
         detached: true,
       });
 
-      const urlSnippet = 'http://localhost';
+      // Regex to detect local server URLs, urlMsg to prevent concurrent data overrides
+      const urlRegex = /http:\/\/\S+\d+/g;
+      let urlMsg = false;
 
-      wranglerChildProcess.stdout!.on('data', (data) => {
-        const str = data.toString();
-        const boxSnippet = '╭───────────';
-        const keyWranglerPhrase = '[wrangler:inf] Ready on http://localhost:';
-        let urlMsg;
+      const wranglerUrl: string | undefined = await new Promise((resolve, reject) => {
+        wranglerChildProcess.stdout!.on('data', async (data) => {
+          const str = data.toString();
+          const keyWranglerPhrase = '[wrangler:inf] Ready on http://localhost:';
 
-        if (str.includes(keyWranglerPhrase) && !urlMsg) {
-          urlMsg = true;
-          ux.action.stop('done!\n');
-          this.log(chalk.green('-'.repeat(50)));
-          const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet));
-          this.log(`🦖 Your local Syncosaurus worker is ready at ${chalk.yellowBright.underline(url)}`);
-          this.log("  NOTE: Press 'b' to open in browser. Press 'x' to gracefully exist");
-          return;
-        }
+          if (str.includes(keyWranglerPhrase) && !urlMsg) {
+            urlMsg = true;
+
+            const urlMatches: string[] = [...str.matchAll(urlRegex)].map(match => match.at(0));
+
+            if (urlMatches && urlMatches.length) {
+              resolve(urlMatches.at(-1));
+            }
+          }
+        });
       });
 
-      wranglerChildProcess.stderr!.on('data', (data) => {});
+      urlMsg = false;
 
-      await wranglerChildProcess;
+      // Execute child process to extract local vite UI dev server URL
+      const viteChildProcess: ExecaChildProcess<string> | null = execa('npx', ['vite'], {
+        cwd: process.cwd(),
+        env: {
+          VITE_DO_URL: process.env.VITE_DO_URL || wranglerUrl,
+        },
+        stdio: ['inherit', 'pipe', 'pipe'],
+        encoding: 'utf8',
+        detached: true,
+      });
+
+      const viteUrl: string | undefined = await new Promise((resolve, _reject) => {
+        viteChildProcess.stdout!.on('data', async (data) => {
+          const str = data.toString();
+          const keyVitePhrase = 'Local:';
+
+          if (str.includes(keyVitePhrase) && !urlMsg) {
+            urlMsg = true;
+            const urlMatches: string[] = [...str.matchAll(urlRegex)].map(match => match.at(0));
+
+            if (urlMatches && urlMatches.length) {
+              resolve(urlMatches.at(-1));
+            }
+          }
+        });
+      });
+
+      ux.action.stop('done!\n');
+      this.log(chalk.green('-'.repeat(50)));
+      this.log(`🦖 Your local Syncosaurus dev server is ready at ${chalk.yellowBright.underline(wranglerUrl)}`);
+      this.log(`🚀 Your local Vite UI server is ready at ${chalk.green.underline(viteUrl)}\n`);
+      this.log(`Press 'x' to gracefully shut down both servers`);
+
+      // If 'x' or 'X' is pressed, gracefully shut down the servers
+      readline.emitKeypressEvents(process.stdin);
+
+      if (process.stdin.isTTY) {
+        process.stdin.setRawMode(true);
+      }
+
+      process.stdin.on('keypress', (_chunk, key) => {
+        if (key && key.name.toLowerCase() === 'x') {
+          if (wranglerChildProcess.pid) {
+            process.kill(-wranglerChildProcess.pid);
+          }
+
+          if (viteChildProcess.pid) {
+            process.kill(-viteChildProcess.pid);
+          }
+
+          process.exit();
+        }
+
+      });
     } else {
       this.error("Not in a Syncosaurus root directory. Expected 'syncosaurus.json' configuration file not found.")
     }

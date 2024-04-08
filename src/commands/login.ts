@@ -1,22 +1,16 @@
-import { select } from '@inquirer/prompts'
-import { Command, ux } from '@oclif/core'
-import { execaCommandSync } from 'execa'
-import ora from 'ora'
-import fs from 'node:fs'
-import checkLogin from '../utils/login-check.js'
+import { select } from '@inquirer/prompts';
+import { Command, ux } from '@oclif/core';
+import { execaCommandSync } from 'execa';
+import fs from 'node:fs';
+import checkLogin from '../utils/login-check.js';
+import { LoginResult } from '../types.js';
 
 export default class Login extends Command {
-  static description = 'Login to Synocosaurus through Oauth or API token'
+  static description = 'Login to Synocosaurus through Oauth or API token';
 
   public async run(): Promise<void> {
-    interface LoginResult {
-      loginStatus: boolean
-      email?: string
-    }
-
-    let loginResult: LoginResult = (await checkLogin()) as LoginResult
-    let { loginStatus, email } = loginResult
-    let loginSpinner
+    let loginResult: LoginResult = (await checkLogin()) as LoginResult;
+    let { loginStatus, email } = loginResult;
 
     if (loginStatus) {
       this.log(`You are already logged in with the email ${email}`);
@@ -37,30 +31,28 @@ export default class Login extends Command {
             description: 'Log in via account ID and API token. You will need to provide your Account ID and API token.',
           },
         ],
-      })
+      });
 
       if (loginChoice === 1) {
-        loginSpinner = ora('Logging in via OAuth\n').start()
-        execaCommandSync(`npx wrangler login`)
+        ux.action.start('Logging in via OAuth...');
+        execaCommandSync(`npx wrangler login`);
       } else {
-        loginSpinner = ora('Logging in via Account ID and API token').start()
-        const accountId = await ux.prompt('What is your Cloudflare Account ID?', { type: 'mask' })
-        const apiToken = await ux.prompt('What is your CloudFlare API Token?', { type: 'mask' })
-        const writeStream = fs.createWriteStream('.env')
-        writeStream.write(`CLOUDFLARE_ACCOUNT_ID=${accountId}\n`)
-        writeStream.write(`CLOUDFLARE_API_TOKEN=${apiToken}`)
+        ux.action.start('Logging in via Account ID and API token...');
+        const accountId = await ux.prompt('What is your Cloudflare Account ID?', { type: 'mask' });
+        const apiToken = await ux.prompt('What is your CloudFlare API Token?', { type: 'mask' });
+        const writeStream = fs.createWriteStream('.env');
+        writeStream.write(`CLOUDFLARE_ACCOUNT_ID=${accountId}\n`);
+        writeStream.write(`CLOUDFLARE_API_TOKEN=${apiToken}`);
       }
 
-      loginResult = (await checkLogin()) as LoginResult
-      loginStatus = loginResult.loginStatus
+      loginResult = (await checkLogin()) as LoginResult;
+      loginStatus = loginResult.loginStatus;
 
       if (!loginStatus) {
-        loginSpinner.fail('You did not successfully log in. Please try again.\n')
+        ux.action.stop('Unable to login. Please try again.');
       } else {
-        loginSpinner.stopAndPersist({
-          symbol: '✅',
-          text: `You successfully logged in with the email ${loginResult.email}!`,
-        })
+        ux.action.stop('success');
+        this.log(`✅ You successfully logged in with the email ${loginResult.email}!`);
       }
     }
   }

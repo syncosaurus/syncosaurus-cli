@@ -56,7 +56,7 @@ export default class Init extends Command {
     All done! Now run:
 
       cd ${projectName}
-      npm run dev\n`);
+      npx syncosaurus dev\n`);
   }
 
   private async createViteProject(projectName: string) {

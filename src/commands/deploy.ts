@@ -3,13 +3,7 @@ import { execa } from 'execa';
 import chalk from 'chalk';
 import { generateWranglerToml } from '../utils/configs.js';
 import fs from 'node:fs';
-
-interface ConfigParams {
-  projectName: string
-  useStorage: boolean
-  msgFrequency: number
-  autosaveInterval: number
-}
+import { ConfigParams } from "../types.js";
 
 export default class Deploy extends Command {
   static description = 'Deploy your Syncosaurus application';
