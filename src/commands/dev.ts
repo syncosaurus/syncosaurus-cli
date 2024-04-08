@@ -1,7 +1,7 @@
-import { Command } from '@oclif/core';
+import { Command, ux } from '@oclif/core';
 import { execa, ExecaChildProcess } from 'execa';
-import ora from 'ora';
 import { generateWranglerToml } from '../utils/configs.js';
+import chalk from 'chalk';
 import fs from 'node:fs';
 
 interface ConfigParams {
@@ -12,7 +12,7 @@ interface ConfigParams {
 }
 
 export class MyCommand extends Command {
-  static description = 'Start a local Syncosaurus development environment'
+  static description = 'Start a local Syncosaurus development environment';
 
   async run(): Promise<void> {
     // Verify the command is run from the root directory
@@ -20,16 +20,18 @@ export class MyCommand extends Command {
 
     if (inSyncoRoot) {
       // Ensure that Syncosaurus is installed
-      const verifySyncoInstall = ora('Checking for Syncosaurus installation...').start();
-      const { stdout: syncoStdout } = await execa('npm', ['list', 'syncosaurus'], { cwd: process.cwd() });
-      if (syncoStdout.includes('(empty)')) {
-        verifySyncoInstall.stopAndPersist({ text: 'Checking for Syncosaurus installation...not found' })
-        const syncoInstall = ora('Installing syncosaurus as a dependency...');
+      ux.action.start('Checking for Syncosaurus installation...');
+      const syncoPackageExists = fs.readdirSync(`${process.cwd()}/node_modules`).includes('syncosaurus');
+      if (!syncoPackageExists) {
+        ux.action.stop('not found');
+        ux.action.start('Installing syncosaurus as a dependency...');
         await execa('npm', ['install', 'syncosaurus'], { cwd: process.cwd() });
-        syncoInstall.stopAndPersist({ text: 'Installing syncosaurus as a dependency...done' });
+        ux.action.stop('done');
+      } else {
+        ux.action.stop('found');
       }
 
-      verifySyncoInstall.stopAndPersist({ text: 'Checking for Syncosaurus installation...found' });
+      ux.action.start('Initializing local dev environment...');
 
       const configParams = JSON.parse(fs.readFileSync('syncosaurus.json', 'utf-8'))
       const { projectName, useStorage, msgFrequency, autosaveInterval } = configParams as ConfigParams
@@ -58,17 +60,7 @@ export class MyCommand extends Command {
         await execa('cp', [`${process.cwd()}/src/authHandler.js`, `${process.cwd()}/node_modules/syncosaurus/do`], { shell: true });
       }
 
-      const viteChildProcess: ExecaChildProcess<string> | null = execa(`vite`, {
-        shell: true,
-        cwd: process.cwd(),
-        env: process.env,
-        stdio: ['inherit', 'pipe', 'pipe'],
-        encoding: 'utf8',
-        detached: true,
-      });
-
       const wranglerChildProcess: ExecaChildProcess<string> | null = execa('wrangler', ['dev', './node_modules/syncosaurus/do/index.mjs'], {
-        shell: true,
         cwd: process.cwd(),
         env: process.env,
         stdio: ['inherit', 'pipe', 'pipe'],
@@ -77,37 +69,23 @@ export class MyCommand extends Command {
       });
 
       const urlSnippet = 'http://localhost';
-      this.log('  Spinning up local development environment...');
-      let wranglerUrl: string;
 
       wranglerChildProcess.stdout!.on('data', (data) => {
         const str = data.toString();
         const boxSnippet = '╭───────────';
+        const keyWranglerPhrase = '[wrangler:inf] Ready on http';
 
-        if (str.includes(urlSnippet)) {
-          const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet, str.indexOf(urlSnippet)));
-          wranglerUrl = `Syncosaurus local worker ready at: ${url}`.trim();
+        if (str.includes(keyWranglerPhrase)) {
+          ux.action.stop('done!\n');
+          const url = str.substring(str.indexOf(urlSnippet), str.indexOf(boxSnippet, str.indexOf(keyWranglerPhrase)) - 1);
+          this.log(`🦖 Syncosaurus local dev server ready: ${chalk.yellowBright(url)}\n`);
+          this.log("  Press 'b' to open this page in your browser. Press 'x' to gracefully exit");
         }
       });
 
-      viteChildProcess.stdout!.on('data', (data) => {
-        const str = data.toString();
+      wranglerChildProcess.stderr!.on('data', (data) => {});
 
-        if (str.includes(urlSnippet)) {
-          const url = str.substring(str.indexOf(urlSnippet));
-
-          this.log(`\n
-            🦖 ${wranglerUrl.trim()}\n
-            🚀 Frontend local server ready at: ${url}\n
-          `);
-
-          wranglerChildProcess.kill('SIGKILL');
-          viteChildProcess.kill('SIGKILL');
-        }
-      });
-
-      await Promise.all([wranglerChildProcess, viteChildProcess]);
-      process.exit(1);
+      await wranglerChildProcess;
     } else {
       this.error("Not in a Syncosaurus root directory. Expected 'syncosaurus.json' configuration file not found.")
     }

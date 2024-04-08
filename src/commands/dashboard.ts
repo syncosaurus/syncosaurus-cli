@@ -24,14 +24,14 @@ export default class Dashboard extends Command {
     const installCheck = ora('Checking for Syncosaurus dashboard installation...').start();
 
     try {
-      const { stdout } = await execa('ls');
+      const { stdout } = await execa('ls', { cwd: process.cwd() });
 
       if (!stdout.includes('syncosaurus-dashboard')) {
         installCheck.stopAndPersist({
           text: `No Syncosaurus dashboard installation found`,
         });
         const cloneAndInstall = ora('Installing Syncosaurus dashboard...').start();
-        await execa('git', ['clone', dashboardRepoURI]);
+        await execa('git', ['clone', dashboardRepoURI], { cwd: process.cwd() });
 
         await execa('npm', ['install'], {
           cwd: `${process.cwd()}/syncosaurus-dashboard`,
