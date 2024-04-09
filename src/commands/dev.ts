@@ -1,14 +1,20 @@
-import { Command, ux } from '@oclif/core';
+import { Command, Flags, ux } from '@oclif/core';
 import { execa, ExecaChildProcess } from 'execa';
 import { generateWranglerToml } from '../utils/configs.js';
 import readline from 'node:readline';
 import chalk from 'chalk';
 import fs from 'node:fs';
 import { ConfigParams } from "../types.js";
-export class MyCommand extends Command {
+export class Dev extends Command {
   static description = 'Start a local Syncosaurus development environment';
 
+  static flags = {
+    backendOnly: Flags.boolean({ char: 'b' }),
+  }
+
   async run(): Promise<void> {
+    const { flags } = await this.parse(Dev);
+
     // Verify the command is run from the root directory
     const inSyncoRoot = fs.readdirSync(process.cwd()).includes('syncosaurus.json');
 
@@ -84,6 +90,16 @@ export class MyCommand extends Command {
         });
       });
 
+      // if -backend / -b flag is used, only spin up the Syncosaurus dev server
+      if (flags.backendOnly) {
+        ux.action.stop('done!\n');
+        this.log(chalk.green('-'.repeat(50)));
+        this.log(`🦖 Your local Syncosaurus dev server is ready at ${chalk.yellowBright.underline(wranglerUrl)}`);
+        this.log(`Press 'x' to gracefully shut down the server`);
+        this.pressXtoExit(wranglerChildProcess);
+        return;
+      }
+
       urlMsg = false;
 
       // Execute child process to extract local vite UI dev server URL
@@ -119,29 +135,33 @@ export class MyCommand extends Command {
       this.log(`🚀 Your local Vite UI server is ready at ${chalk.green.underline(viteUrl)}\n`);
       this.log(`Press 'x' to gracefully shut down both servers`);
 
-      // If 'x' or 'X' is pressed, gracefully shut down the servers
-      readline.emitKeypressEvents(process.stdin);
+      this.pressXtoExit(wranglerChildProcess, viteChildProcess);
 
-      if (process.stdin.isTTY) {
-        process.stdin.setRawMode(true);
-      }
-
-      process.stdin.on('keypress', (_chunk, key) => {
-        if (key && key.name.toLowerCase() === 'x') {
-          if (wranglerChildProcess.pid) {
-            process.kill(-wranglerChildProcess.pid);
-          }
-
-          if (viteChildProcess.pid) {
-            process.kill(-viteChildProcess.pid);
-          }
-
-          process.exit();
-        }
-
-      });
     } else {
       this.error("Not in a Syncosaurus root directory. Expected 'syncosaurus.json' configuration file not found.")
     }
+  }
+
+  // If 'x' or 'X' is pressed, gracefully shut down the servers
+  private pressXtoExit(wranglerChildProcess: ExecaChildProcess<string> | null, viteChildProcess?: ExecaChildProcess<string> | null): void {
+    readline.emitKeypressEvents(process.stdin);
+
+    if (process.stdin.isTTY) {
+      process.stdin.setRawMode(true);
+    }
+
+    process.stdin.on('keypress', (_chunk, key) => {
+      if (key && key.name.toLowerCase() === 'x') {
+        if (wranglerChildProcess && wranglerChildProcess!.pid) {
+          process.kill(-wranglerChildProcess!.pid);
+        }
+
+        if (viteChildProcess && viteChildProcess!.pid) {
+          process.kill(-viteChildProcess!.pid);
+        }
+
+        process.exit();
+      }
+    });
   }
 }
