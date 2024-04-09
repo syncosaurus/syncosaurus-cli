@@ -49,11 +49,7 @@ export default class Destroy extends Command {
         await execa('wrangler', ['delete', '--name', projectName]);
         ux.action.stop('done');
         this.log(`🗑 Successfully deleted '${projectName}'`);
-      } catch(error:unknown) {
-        if (error instanceof Error) {
-          this.log(error.message);
-        }
-
+      } catch(error) {
         this.error(`Unable to delete Syncosaurus worker '${projectName}': Check that this worker is correctly deployed`);
       }
     } else {
