@@ -38,20 +38,26 @@ export default class Destroy extends Command {
 
     // Confirm with the user that the specified deployed worker should be deleted
     const wranglerToml = fs.readFileSync('./node_modules/syncosaurus/do/wrangler.toml', 'utf-8');
-    const projectName = parse(wranglerToml).name;
+    const parsedWranglerToml = parse(wranglerToml);
+    const projectName = parsedWranglerToml.name.toString();
 
     const deleteConfirm = await confirm({ message: `Are you sure you want to proceed with deleting your deployed worker '${projectName}'?`});
 
     if (deleteConfirm) {
       try {
         ux.action.start(`Deleting your deployed ${projectName} worker...`);
-        await execa(`wrangler delete`);
+        await execa('wrangler', ['delete', '--name', projectName]);
         ux.action.stop('done');
-      } catch(error) {
-        this.error(`Unable to delete Syncosaurus worker: ${error}`);
+        this.log(`🗑 Successfully deleted '${projectName}'`);
+      } catch(error:unknown) {
+        if (error instanceof Error) {
+          this.log(error.message);
+        }
+
+        this.error(`Unable to delete Syncosaurus worker '${projectName}': Check that this worker is correctly deployed`);
       }
     } else {
-      this.log(`You decided not to delete your deployed ${projectName} worker`);
+      this.log(`You decided not to delete your deployed worker '${projectName}'.`);
     }
   }
 }
