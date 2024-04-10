@@ -1,28 +1,20 @@
-/* eslint-disable unicorn/no-negated-condition */
-/* eslint-disable unicorn/consistent-destructuring */
-/* eslint-disable perfectionist/sort-interfaces */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable perfectionist/sort-imports */
-/* eslint-disable perfectionist/sort-objects */
 import {select} from '@inquirer/prompts'
 import {Command, ux} from '@oclif/core'
 import {execaCommandSync} from 'execa'
-import ora from 'ora'
 import fs from 'node:fs'
 import checkLogin from '../utils/login-check.js'
+import {LoginResult} from '../types.js'
 
 export default class Login extends Command {
-  static description = 'Login Synocosaurus through Oauth or API token'
+  static description = 'Login to Synocosaurus through Oauth or API token'
 
   public async run(): Promise<void> {
-    interface LoginResult {
-      loginStatus: boolean
-      email?: string
-    }
-
     let loginResult: LoginResult = (await checkLogin()) as LoginResult
-    let {loginStatus} = loginResult
-    let loginSpinner
+    let {loginStatus, email} = loginResult
+
+    if (loginStatus) {
+      this.log(`You are already logged in with the email ${email}`)
+    }
 
     while (!loginStatus) {
       const loginChoice = await select({
@@ -42,10 +34,10 @@ export default class Login extends Command {
       })
 
       if (loginChoice === 1) {
-        loginSpinner = ora('Logging in via OAuth\n').start()
-        execaCommandSync(`npm run login`)
+        ux.action.start('Logging in via OAuth...')
+        execaCommandSync(`npx wrangler login`)
       } else {
-        loginSpinner = ora('Logging in via Account ID and API token').start()
+        ux.action.start('Logging in via Account ID and API token...')
         const accountId = await ux.prompt('What is your Cloudflare Account ID?', {type: 'mask'})
         const apiToken = await ux.prompt('What is your CloudFlare API Token?', {type: 'mask'})
         const writeStream = fs.createWriteStream('.env')
@@ -57,12 +49,10 @@ export default class Login extends Command {
       loginStatus = loginResult.loginStatus
 
       if (!loginStatus) {
-        loginSpinner.fail('You did not successfully log in. Please try again.\n')
+        ux.action.stop('Unable to login. Please try again.')
       } else {
-        loginSpinner.stopAndPersist({
-          symbol: '✅',
-          text: `\nYou successfully logged in with the email ${loginResult.email}!`,
-        })
+        ux.action.stop('success')
+        this.log(`✅ You successfully logged in with the email ${loginResult.email}!`)
       }
     }
   }

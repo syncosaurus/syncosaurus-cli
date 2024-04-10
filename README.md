@@ -5,82 +5,89 @@ The Syncosaurus CLI to create and manage Syncosaurus backed React applications.
 [![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
 
 <!-- toc -->
-* [Syncosaurus CLI](#syncosaurus-cli)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Syncosaurus CLI](#syncosaurus-cli)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
 running command...
 $ syncosaurus (--version)
-syncosaurus-cli/0.1.0 darwin-arm64 node-v21.1.0
+syncosaurus-cli/0.7.0 linux-x64 node-v21.7.1
 $ syncosaurus --help [COMMAND]
 USAGE
   $ syncosaurus COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`syncosaurus dashboard`](#syncosaurus-dashboard)
-* [`syncosaurus deploy`](#syncosaurus-deploy)
-* [`syncosaurus dev`](#syncosaurus-dev)
-* [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
-* [`syncosaurus init`](#syncosaurus-init)
-* [`syncosaurus login`](#syncosaurus-login)
-* [`syncosaurus logout`](#syncosaurus-logout)
-* [`syncosaurus setup`](#syncosaurus-setup)
-* [`syncosaurus tail`](#syncosaurus-tail)
-* [`syncosaurus whoami`](#syncosaurus-whoami)
 
-## `syncosaurus dashboard`
-
-Install the Syncosaurus dashboard.
-
-```
-USAGE
-  $ syncosaurus dashboard
-
-DESCRIPTION
-  Install the Syncosaurus dashboard.
-```
-
-_See code: [src/commands/dashboard.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/dashboard.ts)_
+- [`syncosaurus deploy`](#syncosaurus-deploy)
+- [`syncosaurus destroy`](#syncosaurus-destroy)
+- [`syncosaurus dev`](#syncosaurus-dev)
+- [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
+- [`syncosaurus init`](#syncosaurus-init)
+- [`syncosaurus login`](#syncosaurus-login)
+- [`syncosaurus logout`](#syncosaurus-logout)
+- [`syncosaurus setup`](#syncosaurus-setup)
+- [`syncosaurus tail`](#syncosaurus-tail)
+- [`syncosaurus whoami`](#syncosaurus-whoami)
 
 ## `syncosaurus deploy`
 
-Deploy your syncosaurus project to the edge
+Deploy your Syncosaurus application
 
 ```
 USAGE
   $ syncosaurus deploy
 
 DESCRIPTION
-  Deploy your syncosaurus project to the edge
+  Deploy your Syncosaurus application
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/deploy.ts)_
 
-## `syncosaurus dev`
+## `syncosaurus destroy`
 
-Start concurrent Vite and Wrangler dev servers
+Delete your most recent deployment, only if that deployment matches the current project
 
 ```
 USAGE
-  $ syncosaurus dev
+  $ syncosaurus destroy
 
 DESCRIPTION
-  Start concurrent Vite and Wrangler dev servers
+  Delete your most recent deployment, only if that deployment matches the current project
 ```
 
-_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/dev.ts)_
+_See code: [src/commands/destroy.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/destroy.ts)_
+
+## `syncosaurus dev`
+
+Start a local Syncosaurus development environment
+
+```
+USAGE
+  $ syncosaurus dev [-b]
+
+FLAGS
+  -b, --backendOnly
+
+DESCRIPTION
+  Start a local Syncosaurus development environment
+```
+
+_See code: [src/commands/dev.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/dev.ts)_
 
 ## `syncosaurus help [COMMAND]`
 
@@ -104,85 +111,86 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.2
 
 ## `syncosaurus init`
 
-Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
+Create a new React app, preconfigured with a Syncosaurus multiplayer backend
 
 ```
 USAGE
   $ syncosaurus init
 
 DESCRIPTION
-  Create a fresh React app, preconfigured with a Syncosaurus multiplayer backend.
+  Create a new React app, preconfigured with a Syncosaurus multiplayer backend
 ```
 
-_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/init.ts)_
 
 ## `syncosaurus login`
 
-Login Synocosaurus through Oauth or API token
+Login to Synocosaurus through Oauth or API token
 
 ```
 USAGE
   $ syncosaurus login
 
 DESCRIPTION
-  Login Synocosaurus through Oauth or API token
+  Login to Synocosaurus through Oauth or API token
 ```
 
-_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/login.ts)_
 
 ## `syncosaurus logout`
 
-Login Synocosaurus through Oauth or API token
+Logout of Syncosaurus
 
 ```
 USAGE
   $ syncosaurus logout
 
 DESCRIPTION
-  Login Synocosaurus through Oauth or API token
+  Logout of Syncosaurus
 ```
 
-_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/logout.ts)_
+_See code: [src/commands/logout.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/logout.ts)_
 
 ## `syncosaurus setup`
 
-Add syncosaurus to an existing React application.
+Add syncosaurus to an existing React application
 
 ```
 USAGE
   $ syncosaurus setup
 
 DESCRIPTION
-  Add syncosaurus to an existing React application.
+  Add syncosaurus to an existing React application
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/setup.ts)_
 
 ## `syncosaurus tail`
 
-Setup a tail log to a deployed Syncosaurus server.
+Setup a tail log stream for a deployed Syncosaurus worker
 
 ```
 USAGE
   $ syncosaurus tail
 
 DESCRIPTION
-  Setup a tail log to a deployed Syncosaurus server.
+  Setup a tail log stream for a deployed Syncosaurus worker
 ```
 
-_See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/tail.ts)_
+_See code: [src/commands/tail.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/tail.ts)_
 
 ## `syncosaurus whoami`
 
-Check your current login status
+Check your current Syncosaurus login status
 
 ```
 USAGE
   $ syncosaurus whoami
 
 DESCRIPTION
-  Check your current login status
+  Check your current Syncosaurus login status
 ```
 
-_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.1.0/src/commands/whoami.ts)_
+_See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/whoami.ts)_
+
 <!-- commandsstop -->
