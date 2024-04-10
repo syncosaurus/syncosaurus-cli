@@ -5,14 +5,16 @@ The Syncosaurus CLI to create and manage Syncosaurus backed React applications.
 [![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
 
 <!-- toc -->
-* [Syncosaurus CLI](#syncosaurus-cli)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Syncosaurus CLI](#syncosaurus-cli)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g syncosaurus-cli
 $ syncosaurus COMMAND
@@ -24,21 +26,23 @@ USAGE
   $ syncosaurus COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`syncosaurus deploy`](#syncosaurus-deploy)
-* [`syncosaurus destroy`](#syncosaurus-destroy)
-* [`syncosaurus dev`](#syncosaurus-dev)
-* [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
-* [`syncosaurus init`](#syncosaurus-init)
-* [`syncosaurus login`](#syncosaurus-login)
-* [`syncosaurus logout`](#syncosaurus-logout)
-* [`syncosaurus setup`](#syncosaurus-setup)
-* [`syncosaurus tail`](#syncosaurus-tail)
-* [`syncosaurus whoami`](#syncosaurus-whoami)
+
+- [`syncosaurus deploy`](#syncosaurus-deploy)
+- [`syncosaurus destroy`](#syncosaurus-destroy)
+- [`syncosaurus dev`](#syncosaurus-dev)
+- [`syncosaurus help [COMMAND]`](#syncosaurus-help-command)
+- [`syncosaurus init`](#syncosaurus-init)
+- [`syncosaurus login`](#syncosaurus-login)
+- [`syncosaurus logout`](#syncosaurus-logout)
+- [`syncosaurus setup`](#syncosaurus-setup)
+- [`syncosaurus tail`](#syncosaurus-tail)
+- [`syncosaurus whoami`](#syncosaurus-whoami)
 
 ## `syncosaurus deploy`
 
@@ -188,4 +192,5 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/whoami.ts](https://github.com/syncosaurus/syncosaurus-cli/blob/v0.7.0/src/commands/whoami.ts)_
+
 <!-- commandsstop -->

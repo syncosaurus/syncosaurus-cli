@@ -1,4 +1,4 @@
-const COMPATIBILITY_DATE = "2024-04-05";
+const COMPATIBILITY_DATE = '2024-04-05'
 
 export const generateWranglerToml = (
   projectName: string,
