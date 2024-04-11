@@ -2,6 +2,15 @@
 
 The Syncosaurus CLI application is used to conveniently create, configure, manage, and deploy Syncosaurus applications.
 
+## Requirements
+
+- Node v18+
+- A Cloudflare account
+
+## Installation
+
+run `npm install -g syncosaurus-cli`
+
 ## Setup and Development Commands
 
 ### `syncosaurus init`
