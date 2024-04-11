@@ -1,6 +1,6 @@
 # Syncosaurus CLI
 
-The Syncosaurus CLI application is used to conveniently create, configure, manage, and deploy Syncosaurus applications.
+The Syncosaurus CLI application is used to conveniently create, configure, manage, and deploy Syncosaurus applications. Built in Typescript with the [oclif](https://oclif.io/) framework.
 
 ## Requirements
 
