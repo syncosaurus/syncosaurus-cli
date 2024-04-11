@@ -11,7 +11,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
 
 ## Installation
 
-- Instead of installing the Sycnsosaurus application, it is recommended to run Syncosaurus CLI commands below with [npx](https://docs.npmjs.com/cli/v8/commands/npx).
+- Instead of installing the Sycnsosaurus application, it is recommended to run Syncosaurus CLI commands below with [npx](https://docs.npmjs.com/cli/v10/commands/npx).
 - If you wish to install the Syncosaurus CLI on your local machine, run `npm install -g syncosaurus-cli`. If you choose this route, simply replace `npx syncosaurus` with `syncosaurus` with any of the commands listed below.
   - For example, instead of this `npx` command:
     ```bash
