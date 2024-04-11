@@ -9,7 +9,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
 
 ## Installation
 
-run `npm install -g syncosaurus-cli`
+To install the Syncosaurus CLI, run `npm install -g syncosaurus-cli`. 
 
 ## Setup and Development Commands
 
