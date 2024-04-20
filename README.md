@@ -15,7 +15,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
 <br></br> 
 
 ## Setup and Development Commands
-### `syncosaurus init`
+### `npx syncosaurus init`
 
 - Create a new React application, pre-configured with a Syncosaurus multiplayer backend. Note that this command will create a `syncosaurus.json` configuration file in your root directory.
 
@@ -23,7 +23,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus init
   ```
 
-### `syncosaurus setup`
+### `npx syncosaurus setup`
 
 - Add Syncosaurus to an existing React-based application. Note that this command will also create a `syncosaurus.json` configuration file in your root directory.
 
@@ -31,7 +31,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus setup
   ```
 
-### `syncosaurus dev`
+### `npx syncosaurus dev`
 
 - Start a local Syncosaurus development environment. Run without any flags to start up both a local Syncosaurus server and a local Vite UI server. Run with the `-b`/`-backendOnly` flag to start up only a local Syncosaurus server.
   - The local Syncosaurus server will use the designated port, as specified by a `PORT` value in your local `.env` file. If no such value exists, it will default to port 3001. <br></br>
@@ -42,7 +42,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   <br></br>
 ## Deployment Commands
 
-### `syncosaurus deploy`
+### `npx syncosaurus deploy`
 
 - Deploy your Syncosaurus application. You must be logged in to use this command.
 
@@ -50,7 +50,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus deploy
   ```
 
-### `syncosaurus destroy`
+### `npx syncosaurus destroy`
 
 - Delete your most recent deployment, only if that deployment matches the current project. You must be logged in to use this command.
 
@@ -58,7 +58,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus destroy
   ```
 
-### `syncosaurus tail`
+### `npx syncosaurus tail`
 
 - Setup a tail log stream for a deployed Syncosaurus worker.
 
@@ -68,7 +68,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   <br></br>
 ## Authentication Commands
 
-### `syncosaurus login`
+### `npx syncosaurus login`
 
 - Login to Synocosaurus through OAuth or API token.
 
@@ -76,7 +76,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus login
   ```
 
-### `syncosaurus logout`
+### `npx syncosaurus logout`
 
 - Logout of Syncosaurus.
 
@@ -84,7 +84,7 @@ The Syncosaurus CLI application is used to conveniently create, configure, manag
   syncosaurus logout
   ```
 
-### `syncosaurus whoami`
+### `npx syncosaurus whoami`
 
 - Check your current Syncosaurus login status.
 
